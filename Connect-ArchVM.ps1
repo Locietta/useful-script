@@ -9,7 +9,7 @@ try { # start X server if not started
 } 
 
 $FIND_MACHINE = &$VMRUN list | Select-String $Machine
-if (-not $FIND_MACHINE) { # start X server if not started
+if (-not $FIND_MACHINE) { # start VM if not started
     &$VMRUN -T ws start $Machine nogui;
 }
 

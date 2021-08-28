@@ -134,4 +134,4 @@ $sl.Colors.GitForegroundColor = [ConsoleColor]::Magenta
 $sl.Colors.WithForegroundColor = [ConsoleColor]::DarkYellow
 $sl.Colors.WithBackgroundColor = [ConsoleColor]::Magenta
 $sl.Colors.TimeForegroundColor = [ConsoleColor]::DarkGreen
-$sl.Colors.VirtualEnvForegroundColor = [System.ConsoleColor]::DarkBlue
+$sl.Colors.VirtualEnvForegroundColor = [ConsoleColor]::DarkBlue
