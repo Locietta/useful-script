@@ -2,6 +2,8 @@
 # I'm now using this ^_^
 # 
 # NOTE: To use the prompt, source this file in your profile.
+
+#Requires -Version 7
 $error_count = 0;
 function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
