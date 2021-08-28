@@ -7,19 +7,9 @@
 
 # see https://gist.github.com/bingzhangdai/dd4e283a14290c079a76c4ba17f19d69 for bash script version
 function Get-GitBranchQuick { # quickly fetch current git branch 
-    $_head_file = "";
-    $_dir = "$pwd";
-    while ($_dir) {
-        $_head_file = "$_dir/.git/HEAD";
-        if (Test-Path $_head_file) {
-            break;
-        } else {
-            $_dir = Split-Path $_dir;
-        }
-    }
-    
+    for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
     if ($_dir) {
-        $ret = (Get-Content $_head_file | Split-Path -Leaf);
+        $ret = (Get-Content "$_dir/.git/HEAD" | Split-Path -Leaf);
         if ($ret.Length -ge 8) { # for detached HEAD or long branch name
             $ret = $ret.Substring(0, 8) + '...'
         }
@@ -29,14 +19,7 @@ function Get-GitBranchQuick { # quickly fetch current git branch
     }
 }
 
-function Write-Theme {
-    param(
-        [bool]
-        $lastCommandFailed,
-        [string]
-        $with
-    )
-
+function Write-Theme([bool] $lastCommandFailed, [string] $with) {
     # ┌
     $prompt = Write-Prompt -Object ([char]::ConvertFromUtf32(0x250C)) -ForegroundColor $sl.Colors.PromptSymbolColorUpper
 
@@ -95,24 +78,14 @@ function Write-Theme {
 }
 
 # Use these function to write <>-
-function Write-UpperSegment {
-    param(
-        $content,
-        $foregroundColor
-    )
-
+function Write-UpperSegment($content, $foregroundColor) {
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentBackwardSymbol -ForegroundColor $sl.Colors.PromptSymbolColorUpper
     $prompt += Write-Prompt -Object $content -ForegroundColor $foregroundColor
     $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol)-" -ForegroundColor $sl.Colors.PromptSymbolColorUpper
     return $prompt
 }
 
-function Write-LowerSegment {
-    param(
-        $content,
-        $foregroundColor
-    )
-    
+function Write-LowerSegment($content, $foregroundColor) {
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentBackwardSymbol -ForegroundColor $sl.Colors.PromptSymbolColorLower
     $prompt += Write-Prompt -Object $content -ForegroundColor $foregroundColor
     $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol)-" -ForegroundColor $sl.Colors.PromptSymbolColorLower
