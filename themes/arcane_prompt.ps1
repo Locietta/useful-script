@@ -2,8 +2,9 @@
 # I'm now using this ^_^
 # 
 # NOTE: To use the prompt, source this file in your profile.
-
+$error_count = 0;
 function prompt {
+    $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
     $upper_info = @(
         # Host
         @("$env:USERNAME@$env:COMPUTERNAME", [ConsoleColor]::Green),
@@ -12,22 +13,21 @@ function prompt {
         # Git Status
         @( if ($status = Get-GitBranchQuick) { "git:$status" } else { $null }, [ConsoleColor]::Magenta)
     );
-        
     $lower_info = @(
         # Check the last command state and indicate if failed 
-        # FIXME: failure detection broken
-        @(if ($?) { $null } else { [char]::ConvertFromUtf32(0x274C) }, [ConsoleColor]::DarkRed), # "`u{274C}" unicode escape not available in PowerShell 5
+        @(if ($last_cmd_failed) { "`u{274C}" } else { $null; }, [ConsoleColor]::DarkRed), # use `[char]::ConvertFromUtf32(0x274C)` in powershell 5
         # Check for elevated prompt
-        @(if (Test-Administrator) { [char]::ConvertFromUtf32(0x26A1) } else { $null }, [ConsoleColor]::DarkYellow),
+        @(if (Test-Administrator) { "`u{26A1}" } else { $null }, [ConsoleColor]::DarkYellow),
         # Current time
         @("$(Get-Date -Format HH:mm:ss)", [ConsoleColor]::DarkGreen),
         # Virtual environment
         @(if (Test-VirtualEnv) { "env:$(Get-VirtualEnvName)" } else { $null }, [ConsoleColor]::DarkBlue)
     )
-    Write-Host "┌" -NoNewline -ForegroundColor $([ConsoleColor]::White)
+    $script:error_count = $global:error.Count
+    Write-Host "`u{250C}" -NoNewline -ForegroundColor $([ConsoleColor]::White)
     Write-PromptGroup -prompt_group $upper_info -separator_color $([ConsoleColor]::White)
     Set-Newline
-    Write-Host "└" -NoNewline -ForegroundColor $([ConsoleColor]::DarkMagenta)
+    Write-Host "`u{2514}" -NoNewline -ForegroundColor $([ConsoleColor]::DarkMagenta)
     Write-PromptGroup -prompt_group $lower_info -separator_color $([ConsoleColor]::DarkMagenta)
     Write-Host "->" -NoNewline -ForegroundColor $([ConsoleColor]::DarkMagenta)
     return " "
