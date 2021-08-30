@@ -1,5 +1,5 @@
 $VMRUN = "D:\\VMWare\vmrun.exe"
-$XMING = "D:\\""Program Files (x86)""\\Xming\\Xming.exe"
+$XMING = "D:\\Scoop\\apps\\xming\\current\\Xming.exe"
 $Machine = "D:\\.WSL\\ArchLinuxVMWare\\ArchLinux.vmx"
 
 try { # start X server if not started
