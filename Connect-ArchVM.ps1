@@ -4,9 +4,8 @@ $Machine = "D:\\.WSL\\ArchLinuxVMWare\\ArchLinux.vmx"
 
 try { # start X server if not started
     $SILENT = Get-Process "Xming" -ErrorAction Stop # to make it silent
-} catch {
-    $env:DISPLAY = "localhost:0.0";
-    &$XMING ":0" -clipboard -multiwindow;
+} catch { 
+    Invoke-Expression "$XMING :0 -clipboard -multiwindow";
 } 
 
 $FIND_MACHINE = &$VMRUN list | Select-String $Machine
