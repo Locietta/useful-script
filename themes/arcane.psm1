@@ -1,5 +1,3 @@
-# forked from https://gist.github.com/NachtgeistW/f394ca3e461edb40550a3f59445c61f2
-
 # Oh-My-Posh V3 themes loads faster than V2 themes when opening a new POSH window, but they write prompts slower
 # And V3 is somehow unable to colorize a text containing '<' (a bug maybe), so I'll still stay at V2 for some time
 
