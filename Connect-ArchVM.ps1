@@ -1,11 +1,13 @@
 $VMRUN = "D:\\VMWare\vmrun.exe"
-$XMING = "D:\\Scoop\\apps\\xming\\current\\Xming.exe"
+$X_SRV = "D:\\Scoop\\apps\\vcxsrv\\current\\vcxsrv.exe"
 $Machine = "D:\\.WSL\\ArchLinuxVMWare\\ArchLinux.vmx"
 
+$env:DISPLAY = "localhost:0.0" # set X recieve port
+
 try { # start X server if not started
-    $SILENT = Get-Process "Xming" -ErrorAction Stop # to make it silent
-} catch { 
-    &$XMING ":0" -clipboard -multiwindow;
+    $SILENT = Get-Process "vcxsrv" -ErrorAction Stop; # to make it silent
+} catch { # start X server before vm, or X Forwarding will fail
+    &$X_SRV ":0" -clipboard -multiwindow -ac -wgl;
 } 
 
 $FIND_MACHINE = &$VMRUN list | Select-String $Machine
