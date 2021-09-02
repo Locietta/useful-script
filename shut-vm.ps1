@@ -1,5 +1,5 @@
 param(
-    [switch] $x # whether to close Xming
+    [switch] $x # whether to close X Server
 )
 
 $VMRUN = "D:\\VMWare\vmrun.exe"
@@ -7,12 +7,12 @@ $VMRUN = "D:\\VMWare\vmrun.exe"
 
 if ($x) {
     try {
-        $XMING = Get-Process "Xming" -ErrorAction Stop
+        $X_SRV = Get-Process "vcxsrv" -ErrorAction Stop
     } catch {
-        Write-Output "Xming isn't running."
+        Write-Output "X Server isn't running."
     }
 }
 
-if ($XMING) {
-    Stop-Process -Name "Xming"
+if ($X_SRV) {
+    Stop-Process -Name "vcxsrv"
 }
