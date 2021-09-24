@@ -20,18 +20,27 @@ function png2ico {
         [alias("i")]
         [string] $input_file = $null,
         [alias("o")]
-        [string] $output_file = "$(
+        [string] $output_file = $(
             if ($input_file) {
-                $(Split-Path -Path $input_file -Parent)/$(Split-Path -Path $input_file -LeafBase).ico
+                "$(Split-Path -Path $input_file -Parent)/$(Split-Path -Path $input_file -LeafBase).ico"
             } else {
                 $null
-            })
-        "
+            }
+        )
     )
     # TODO: handle pipe
     if (!$input_file) {
         return "You must specify a PNG file to be converted."
     }
 
-    &$ico_converter $input_file -define icon:auto-resize=256,64,48,32,16 $output_file
+    # convert relative path into absolute path
+    if (!(Split-Path -Path $input_file -IsAbsolute)) {
+        $input_file = [System.IO.Path]::GetFullPath($input_file, $pwd)
+    }
+    if (!(Split-Path -Path $output_file -IsAbsolute)) {
+        $output_file = [System.IO.Path]::GetFullPath($output_file, $pwd)
+    }
+
+    # write-host "$ico_converter ""$input_file"" -define icon:auto-resize=256,64,48,32,16 ""$output_file""" # debug
+    Invoke-Expression "$ico_converter ""$input_file"" -define icon:auto-resize=256,64,48,32,16 ""$output_file"""
 }
