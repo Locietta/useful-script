@@ -12,4 +12,4 @@ D:\Xilinx\14.6\LabTools\LabTools\bin\nt\impact.exe -batch D:\.config\Vivado-shor
 
 @REM del D:\.config\Vivado-shortcut\temp_cmd.cmd
 
-del %~dp0/_impactbatch.log
+del %cd%\_impactbatch.log
