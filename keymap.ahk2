@@ -1,0 +1,24 @@
+; autohotkey v2 beta.3
+#SingleInstance Force
+
+Invoker(WinTitle, runCommand) {
+    if (hwnd := WinExist(WinTitle)) {
+        minmaxState := WinGetMinMax(hwnd)
+        if (minmaxState == -1) {	; 最小化
+            WinRestore(hwnd)
+        } else {	; 不是最小化
+            WinMinimize(hwnd)
+        }
+    } else {
+        Run(runCommand)
+    }
+}
+
+#^z:: +!Backspace
+#f::#v
+#z::#1
+#v:: Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode-portable\current\Code.exe")
+#e:: Invoker("ahk_exe TotalCMD64.exe", "D:\totalcmd\TotalCMD64.exe")
+#k:: Invoker("ahk_exe Clash for Windows.exe", "D:\Clash\Clash for Windows.exe")
+#c:: Invoker("ahk_exe msedge.exe", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
+#Space::#3
