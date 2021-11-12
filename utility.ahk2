@@ -1,0 +1,15 @@
+; autohotkey v2 beta.3
+#SingleInstance Force
+
+Invoker(WinTitle, runCommand) {
+    if (hwnd := WinExist(WinTitle)) {
+        minmaxState := WinGetMinMax(hwnd)
+        if (minmaxState == -1) {	; 最小化
+            WinRestore(hwnd)
+        } else {	; 不是最小化
+            WinMinimize(hwnd)
+        }
+    } else {
+        Run(runCommand)
+    }
+}
