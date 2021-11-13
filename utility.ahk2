@@ -3,6 +3,11 @@
 ; * utility functions for AHKv2 scripts
 ; * use `#Include` to import functions here into your own scripts
 
+; Usage 
+; ======================================
+; use Win+Alt+Space to toggle Windows Termianl:
+; #!Space:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
+; 
 Invoker(WinTitle, runCommand) {
     ; WinTitle: to match the window
     ; runCommand: command used to open app
