@@ -5,13 +5,14 @@ Invoker(WinTitle, runCommand) {
     ; runCommand: command used to open app
     if (hwnd := WinExist(WinTitle)) {
         minmaxState := WinGetMinMax(hwnd)
-        if (minmaxState == -1) {	; 最小化
+        if (minmaxState == -1) {	; minimized window
             WinRestore(hwnd)
             WinActivate(hwnd)
-        } else {	; 不是最小化
+        } else {	; non-minimized window
             WinMinimize(hwnd)
         }
     } else {
         Run(runCommand)
+        WinActivate(WinWait(WinTitle))	; activate the new window
     }
 }
