@@ -14,13 +14,13 @@ function prompt {
         # Current Path
         @("$(($pwd.path.Replace($global:HOME, '~')).TrimEnd('\'))", [ConsoleColor]::Blue),
         # Git Status
-        @( if ($status = Get-GitBranchQuick) { "git:$status" } else { $null }, [ConsoleColor]::Magenta)
+        @(($status = Get-GitBranchQuick ? "git:$status" : $null), [ConsoleColor]::Magenta)
     );
     $lower_info = @(
         # Check the last command state and indicate if failed 
-        @(if ($last_cmd_failed) { "`u{274C}" } else { $null; }, [ConsoleColor]::DarkRed), # use `[char]::ConvertFromUtf32(0x274C)` in powershell 5
+        @(($last_cmd_failed ? "`u{274C}" : $null), [ConsoleColor]::DarkRed), # use `[char]::ConvertFromUtf32(0x274C)` in powershell 5
         # Check for elevated prompt
-        @(if (Test-Administrator) { "`u{26A1}" } else { $null }, [ConsoleColor]::DarkYellow),
+        @((Test-Administrator ? "`u{26A1}" : $null), [ConsoleColor]::DarkYellow),
         # Current time
         @("$(Get-Date -Format HH:mm:ss)", [ConsoleColor]::DarkGreen),
         # Virtual environment
