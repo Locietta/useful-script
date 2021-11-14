@@ -5,7 +5,7 @@
 # use `imagemagick` package as the converter
 # you can obtain it via `Scoop` package manager or MSYS2(with `pacman -S mingw-w64-x86_64-imagemagick`)
 # for more details, go to its official website (https://imagemagick.org/)
-$ico_converter = "D:\Scoop\apps\imagemagick\current\convert.exe"
+$ico_converter = "D:\Scoop\apps\imagemagick\current\magick.exe convert"
 
 <# 
    Or you can also use toolchains from WSL (which allows you to use native linux tools),
