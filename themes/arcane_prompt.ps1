@@ -12,7 +12,7 @@ function prompt {
         # Host
         @("$env:USERNAME@$env:COMPUTERNAME", [ConsoleColor]::Green),
         # Current Path
-        @("$(Get-FullPath -dir $pwd)", [ConsoleColor]::Blue),
+        @("$(($pwd.path.Replace($global:HOME, '~')).TrimEnd('\'))", [ConsoleColor]::Blue),
         # Git Status
         @( if ($status = Get-GitBranchQuick) { "git:$status" } else { $null }, [ConsoleColor]::Magenta)
     );
@@ -24,17 +24,31 @@ function prompt {
         # Current time
         @("$(Get-Date -Format HH:mm:ss)", [ConsoleColor]::DarkGreen),
         # Virtual environment
-        @(if (Test-VirtualEnv) { "env:$(Get-VirtualEnvName)" } else { $null }, [ConsoleColor]::DarkBlue)
+        @((Get-VirtualEnvName), [ConsoleColor]::DarkBlue)
     )
     $script:error_count = $global:error.Count
     [Console]::ForegroundColor = [ConsoleColor]::White; [Console]::Write("`u{250C}");
     Write-PromptGroup -prompt_group $upper_info -separator_color $([ConsoleColor]::White)
-    Set-Newline
+    [Console]::WriteLine()
     [Console]::ForegroundColor = [ConsoleColor]::DarkMagenta; [Console]::Write("`u{2514}");
     Write-PromptGroup -prompt_group $lower_info -separator_color $([ConsoleColor]::DarkMagenta)
     [Console]::ForegroundColor = [ConsoleColor]::DarkMagenta; [Console]::Write("->");
     [Console]::ResetColor();
     return " "
+}
+
+function Test-Administrator {
+    return !([Security.Principal.WindowsIdentity]::GetCurrent().Owner.CompareTo("S-1-5-32-544"))
+}
+
+function Get-VirtualEnvName {
+    if ($env:VIRTUAL_ENV) {
+        return "venv:$($env:VIRTUAL_ENV -split '\\')[-1].Trim('[\/]')"
+    } elseif ($env:CONDA_DEFAULT_ENV) {
+        return "conda:$env:CONDA_DEFAULT_ENV"
+    } else {
+        return $null
+    }
 }
 
 function Get-GitBranchQuick { # quickly fetch current git branch 
