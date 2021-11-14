@@ -26,15 +26,19 @@ function prompt {
         @(if (Test-VirtualEnv) { "env:$(Get-VirtualEnvName)" } else { $null }, [ConsoleColor]::DarkBlue)
     )
     $script:error_count = $global:error.Count
-    Write-Host "`u{250C}" -NoNewline -ForegroundColor $([ConsoleColor]::White)
+    Write-Quick -str "`u{250C}" -color $([ConsoleColor]::White)
     Write-PromptGroup -prompt_group $upper_info -separator_color $([ConsoleColor]::White)
     Set-Newline
-    Write-Host "`u{2514}" -NoNewline -ForegroundColor $([ConsoleColor]::DarkMagenta)
+    Write-Quick -str "`u{2514}" -color $([ConsoleColor]::DarkMagenta)
     Write-PromptGroup -prompt_group $lower_info -separator_color $([ConsoleColor]::DarkMagenta)
-    Write-Host "->" -NoNewline -ForegroundColor $([ConsoleColor]::DarkMagenta)
+    Write-Quick -str "->" -color $([ConsoleColor]::DarkMagenta)
     return " "
 }
-        
+
+function Write-Quick([string] $str, [ConsoleColor] $color) {
+    [Console]::ForegroundColor = $color; [Console]::Write($str);
+}
+
 function Get-GitBranchQuick { # quickly fetch current git branch 
     for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
     if ($_dir) {
@@ -63,11 +67,11 @@ function Write-PromptGroup($prompt_group, [ConsoleColor] $separator_color) {
     $count, $size = 0, $(Get-PromptGroupSize $prompt_group);
     foreach ($e in $prompt_group) {
         if ($e[0]) {
-            Write-Host '<' -NoNewline -ForegroundColor $separator_color;
-            Write-Host $e[0] -NoNewline -ForegroundColor $e[1];
-            Write-Host '>' -NoNewline -ForegroundColor $separator_color;
+            Write-Quick -str "<" -color $separator_color
+            Write-Quick -str $e[0] -color $e[1]
+            Write-Quick -str ">" -color $separator_color
             if (++$count -ne $size) {
-                Write-Host '-' -NoNewline -ForegroundColor $separator_color;
+                Write-Quick -str "-" -color $separator_color
             }
         }
     }
