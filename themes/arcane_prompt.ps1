@@ -43,7 +43,7 @@ function Test-Administrator {
 
 function Get-VirtualEnvName {
     if ($env:VIRTUAL_ENV) {
-        return "venv:$($env:VIRTUAL_ENV -split '\\')[-1].Trim('[\/]')"
+        return "venv:$($($env:VIRTUAL_ENV -split '\\')[-1].Trim('[\/]'))"
     } elseif ($env:CONDA_DEFAULT_ENV) {
         return "conda:$env:CONDA_DEFAULT_ENV"
     } else {
