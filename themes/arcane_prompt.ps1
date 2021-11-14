@@ -5,6 +5,7 @@
 
 #Requires -Version 7
 $error_count = 0;
+
 function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
     $upper_info = @(
@@ -26,25 +27,22 @@ function prompt {
         @(if (Test-VirtualEnv) { "env:$(Get-VirtualEnvName)" } else { $null }, [ConsoleColor]::DarkBlue)
     )
     $script:error_count = $global:error.Count
-    Write-Quick -str "`u{250C}" -color $([ConsoleColor]::White)
+    [Console]::ForegroundColor = [ConsoleColor]::White; [Console]::Write("`u{250C}");
     Write-PromptGroup -prompt_group $upper_info -separator_color $([ConsoleColor]::White)
     Set-Newline
-    Write-Quick -str "`u{2514}" -color $([ConsoleColor]::DarkMagenta)
+    [Console]::ForegroundColor = [ConsoleColor]::DarkMagenta; [Console]::Write("`u{2514}");
     Write-PromptGroup -prompt_group $lower_info -separator_color $([ConsoleColor]::DarkMagenta)
-    Write-Quick -str "->" -color $([ConsoleColor]::DarkMagenta)
+    [Console]::ForegroundColor = [ConsoleColor]::DarkMagenta; [Console]::Write("->");
+    [Console]::ResetColor();
     return " "
-}
-
-function Write-Quick([string] $str, [ConsoleColor] $color) {
-    [Console]::ForegroundColor = $color; [Console]::Write($str);
 }
 
 function Get-GitBranchQuick { # quickly fetch current git branch 
     for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
     if ($_dir) {
         $ret = (Get-Content "$_dir/.git/HEAD" | Split-Path -Leaf);
-        if ($ret.Length -ge 8) { # for detached HEAD or long branch name
-            $ret = $ret.Substring(0, 8) + '...'
+        if ($ret.Length -ge 20) { # for detached HEAD or long branch name
+            $ret = $ret.Substring(0, 20) + '...'
         }
         return $ret
     } else {
@@ -57,7 +55,7 @@ function Get-PromptGroupSize($prompt_group) {
     $count = 0;
     foreach ($e in $prompt_group) {
         if ($e[0]) {
-            ++$count
+            [void]++$count
         }
     }
     return $count
@@ -67,11 +65,11 @@ function Write-PromptGroup($prompt_group, [ConsoleColor] $separator_color) {
     $count, $size = 0, $(Get-PromptGroupSize $prompt_group);
     foreach ($e in $prompt_group) {
         if ($e[0]) {
-            Write-Quick -str "<" -color $separator_color
-            Write-Quick -str $e[0] -color $e[1]
-            Write-Quick -str ">" -color $separator_color
+            [Console]::ForegroundColor = $separator_color; [Console]::Write("<");
+            [Console]::ForegroundColor = $e[1]; [Console]::Write($e[0]);
+            [Console]::ForegroundColor = $separator_color; [Console]::Write(">");
             if (++$count -ne $size) {
-                Write-Quick -str "-" -color $separator_color
+                [Console]::ForegroundColor = $separator_color; [Console]::Write("-");
             }
         }
     }
