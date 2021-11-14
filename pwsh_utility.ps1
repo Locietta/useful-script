@@ -44,3 +44,17 @@ function png2ico {
     # write-host "$ico_converter ""$input_file"" -define icon:auto-resize=256,64,48,32,16 ""$output_file""" # debug
     Invoke-Expression "$ico_converter ""$input_file"" -define icon:auto-resize=256,64,48,32,16 ""$output_file"""
 }
+
+function time([string] $command) {
+    $start = Get-Date;
+    Invoke-Expression "$Command";
+    $end = Get-Date;
+    Write-Host -ForegroundColor Blue ('Total Runtime: ' + ($end - $start).TotalSeconds);
+}
+
+function gb {
+    for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
+    if ($_dir) {
+        git status
+    }
+}
