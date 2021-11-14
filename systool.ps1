@@ -8,14 +8,14 @@ param (
 $commandList = @{
     "enable"  = @(
         @{
-            "admin"  = [scriptblock] {
+            "admin"  = {
                 sudo net user administrator /active:yes
             }
-            "hyperv" = [scriptblock] {
+            "hyperv" = {
                 sudo bcdedit /set hypervisorlaunchtype auto
             }
         }, 
-        [scriptblock] {
+        {
             param([hashtable] $enable_objs = $commandList.enable[0])
             if ($enable_objs.ContainsKey($stuff)) {
                 &$enable_objs.$stuff
@@ -26,13 +26,14 @@ $commandList = @{
     )
     "disable" = @(
         @{
-            "admin"  = [scriptblock] {
+            "admin"  = {
                 sudo net user administrator /active:no
             }
-            "hyperv" = [scriptblock] {
+            "hyperv" = {
                 sudo bcdedit /set hypervisorlaunchtype off
             }
-        }, [scriptblock] {
+        },
+        {
             param([hashtable] $disable_objs = $commandList.disable[0])
             if ($disable_objs.ContainsKey($stuff)) {
                 &$disable_objs.$stuff
