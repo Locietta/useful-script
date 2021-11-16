@@ -6,8 +6,8 @@ $Machine = "D:\\.WSL\\ArchLinuxVMWare\\ArchLinux.vmx"
 $env:DISPLAY = "localhost:0.0" # set X recieve port
 
 try { # start X server if not started
-    # $SILENT = Get-Process "x410" -ErrorAction Stop; # to make it silent
-    $SILENT = Get-Process "vcxsrv" -ErrorAction Stop; 
+    # $null = Get-Process "x410" -ErrorAction Stop; # to make it silent
+    $null = Get-Process "vcxsrv" -ErrorAction Stop; 
 } catch { # start X server before vm, or X Forwarding will fail
     # &$X_SRV ":0" /wm /public;
     &$X_SRV ":0" -clipboard -multiwindow -ac -wgl;

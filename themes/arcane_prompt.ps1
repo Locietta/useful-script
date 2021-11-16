@@ -14,7 +14,7 @@ function prompt {
         # Current Path
         @("$(($pwd.path.Replace($global:HOME, '~')).TrimEnd('\'))", [ConsoleColor]::Blue),
         # Git Status
-        @(($status = Get-GitBranchQuick ? "git:$status" : $null), [ConsoleColor]::Magenta)
+        @((($status = Get-GitBranchQuick) ? "git:$status" : $null), [ConsoleColor]::Magenta)
     );
     $lower_info = @(
         # Check the last command state and indicate if failed 
