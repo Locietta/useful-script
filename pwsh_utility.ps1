@@ -45,11 +45,16 @@ function png2ico {
     Invoke-Expression "$ico_converter ""$input_file"" -define icon:auto-resize=256,64,48,32,16 ""$output_file"""
 }
 
-function time([string] $command) {
+function time {
+    if (-not $args.Length) {
+        Write-Host -ForegroundColor Magenta ('Usage: time [command [arg0 arg1 ...]]');
+        return;
+    }
+    $command_str = ($args -join ' ') # to surpass the overhead of passing array in `iex @args`
     $start = Get-Date;
-    Invoke-Expression "$Command";
+    Invoke-Expression $command_str;
     $end = Get-Date;
-    Write-Host -ForegroundColor Blue ('Total Runtime: ' + ($end - $start).TotalSeconds);
+    Write-Host -ForegroundColor Magenta ('Total Runtime: ' + ($end - $start).TotalSeconds);
 }
 
 function gb {
