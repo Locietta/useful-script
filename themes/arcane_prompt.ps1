@@ -18,9 +18,9 @@ function prompt {
     );
     $lower_info = @(
         # Check the last command state and indicate if failed 
-        @(($last_cmd_failed ? "`u{274C}" : $null), [ConsoleColor]::DarkRed), # use `[char]::ConvertFromUtf32(0x274C)` in powershell 5
+        @((($last_cmd_failed) ? "`u{274C}" : $null), [ConsoleColor]::DarkRed), # use `[char]::ConvertFromUtf32(0x274C)` in powershell 5
         # Check for elevated prompt
-        @((Test-Administrator ? "`u{26A1}" : $null), [ConsoleColor]::DarkYellow),
+        @(((Test-Administrator) ? "`u{26A1}" : $null), [ConsoleColor]::DarkYellow),
         # Current time
         @("$(Get-Date -Format HH:mm:ss)", [ConsoleColor]::DarkGreen),
         # Virtual environment
