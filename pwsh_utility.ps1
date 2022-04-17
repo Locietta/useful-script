@@ -66,7 +66,7 @@ function gb {
 
 # Implementation of `systool`
 
-$systool_cmdList = @{
+$systool_cmdList = [ordered] @{
     "enable"  = @(
         @{
             "admin"  = {
@@ -85,7 +85,7 @@ $systool_cmdList = @{
             }
         }
     )
-    "disable" = @(  
+    "disable" = @(
         @{
             "admin"  = {
                 sudo net user administrator /active:no
@@ -135,6 +135,36 @@ $systool_cmdList = @{
             }
         }
     )
+    "notepad" = @(
+        @{
+            "restore" = $null
+            "<myExe>" = $null
+        },
+        {
+            if ($stuff -match "restore") {
+                sudo Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
+                    -Name Debugger
+            } else {
+                $my_notepad = $(if ([String]::IsNullOrEmpty($stuff)) {
+                        """D:\Scoop\apps\notepad3\current\Notepad3.exe"" /z"
+                    } else {
+                        $stuff
+                    })
+                $notepad_reg_entry = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
+                if ([String]::IsNullOrEmpty(($notepad_reg_entry | Get-Member | Select-String Debugger))) {
+                    sudo New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
+                        -Name Debugger -Value $my_notepad
+                } else {
+                    sudo Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
+                        -Name Debugger -Value $my_notepad
+                    [Console]::Write("Debugger is set to ")
+                    [Console]::ForegroundColor = [ConsoleColor]::Blue
+                    Write-Output $my_notepad
+                    [Console]::ResetColor();
+                }
+            }
+        }
+    )
 }
 
 function systool (
@@ -151,7 +181,7 @@ function systool (
         return
     }
     
-    if ($systool_cmdList.ContainsKey($subCommand)) {
+    if ($systool_cmdList.Contains($subCommand)) {
         &$systool_cmdList.$subCommand[1]
     } else {
         Write-Output "Invalid subcommand: ``$subCommand``"
