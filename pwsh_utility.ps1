@@ -141,17 +141,20 @@ $systool_cmdList = [ordered] @{
             "<myExe>" = $null
         },
         {
+            $notepad_reg_entry = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
+            $notepad_reg_entry_exist = ($notepad_reg_entry | Get-Member | Select-String Debugger)
             if ($stuff -match "restore") {
-                sudo Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
-                    -Name Debugger
+                if ($notepad_reg_entry_exist) {
+                    sudo Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
+                        -Name Debugger
+                }
             } else {
-                $my_notepad = $(if ([String]::IsNullOrEmpty($stuff)) {
+                $my_notepad = $(if (!$stuff) {
                         """D:\Scoop\apps\notepad3\current\Notepad3.exe"" /z"
                     } else {
                         $stuff
                     })
-                $notepad_reg_entry = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
-                if ([String]::IsNullOrEmpty(($notepad_reg_entry | Get-Member | Select-String Debugger))) {
+                if (!$notepad_reg_entry_exist) {
                     sudo New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
                         -Name Debugger -Value $my_notepad
                 } else {
