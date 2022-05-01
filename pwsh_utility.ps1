@@ -168,6 +168,28 @@ $systool_cmdList = [ordered] @{
             }
         }
     )
+    "fix_wsl" = @(
+        @{
+            "cuda" = { # WSL2 libcuda.so is not symbolic warning
+                sudo pwsh -c {
+                    Set-Location "C:\Windows\System32\lxss\lib"
+                    Remove-Item libcuda.so.1
+                    Remove-Item libcuda.so
+                    wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so.1
+                    wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so
+                    Write-Output "WSL2 libcuda symbolic is repaired!"
+                }
+            }
+        },
+        {
+            param([hashtable] $locale_objs = $systool_cmdList.fix_wsl[0])
+            if ($locale_objs.ContainsKey($stuff)) {
+                &$locale_objs.$stuff
+            } else {
+                Write-Output "Can't change to unsupported locale: ``$stuff``"
+            }
+        }
+    )
 }
 
 function systool (
