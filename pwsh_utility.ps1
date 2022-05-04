@@ -141,12 +141,12 @@ $systool_cmdList = [ordered] @{
             "<myExe>" = $null
         },
         {
-            $notepad_reg_entry = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
+            $notepad_reg_path = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
+            $notepad_reg_entry = Get-ItemProperty -Path $notepad_reg_path
             $notepad_reg_entry_exist = ($notepad_reg_entry | Get-Member | Select-String Debugger)
             if ($stuff -match "restore") {
                 if ($notepad_reg_entry_exist) {
-                    sudo Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
-                        -Name Debugger
+                    sudo Remove-ItemProperty -Path $notepad_reg_path -Name Debugger
                 }
             } else {
                 $my_notepad = $(if (!$stuff) {
@@ -154,12 +154,11 @@ $systool_cmdList = [ordered] @{
                     } else {
                         $stuff
                     })
+                sudo Set-ItemProperty -Path $notepad_reg_path -Name UseFilter -Value 0 -Force # unset UseFilter, to enable image execution
                 if (!$notepad_reg_entry_exist) {
-                    sudo New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
-                        -Name Debugger -Value $my_notepad
+                    sudo New-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force
                 } else {
-                    sudo Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"`
-                        -Name Debugger -Value $my_notepad
+                    sudo Set-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force
                     [Console]::Write("Debugger is set to ")
                     [Console]::ForegroundColor = [ConsoleColor]::Blue
                     Write-Output $my_notepad
