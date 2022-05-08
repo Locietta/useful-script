@@ -64,6 +64,10 @@ function gb {
     }
 }
 
+function su {
+    gsudo.exe
+}
+
 # Implementation of `systool`
 
 $systool_cmdList = [ordered] @{
@@ -170,7 +174,7 @@ $systool_cmdList = [ordered] @{
     "fix_wsl" = @(
         @{
             "cuda" = { # WSL2 libcuda.so is not symbolic warning
-                sudo pwsh -c {
+                sudo pwsh -nop -c {
                     Set-Location "C:\Windows\System32\lxss\lib"
                     Remove-Item libcuda.so.1
                     Remove-Item libcuda.so
