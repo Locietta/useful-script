@@ -74,10 +74,10 @@ $systool_cmdList = [ordered] @{
     "enable"  = @(
         @{
             "admin"  = {
-                sudo net user administrator /active:yes
+                sudo -d net user administrator /active:yes
             }
             "hyperv" = {
-                sudo bcdedit /set hypervisorlaunchtype auto
+                sudo -d bcdedit /set hypervisorlaunchtype auto
             }
         }, 
         {
@@ -92,10 +92,10 @@ $systool_cmdList = [ordered] @{
     "disable" = @(
         @{
             "admin"  = {
-                sudo net user administrator /active:no
+                sudo -d net user administrator /active:no
             }
             "hyperv" = {
-                sudo bcdedit /set hypervisorlaunchtype off
+                sudo -d bcdedit /set hypervisorlaunchtype off
             }
         },
         {
@@ -146,27 +146,30 @@ $systool_cmdList = [ordered] @{
         },
         {
             $notepad_reg_path = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
-            $notepad_reg_entry = Get-ItemProperty -Path $notepad_reg_path
-            $notepad_reg_entry_exist = ($notepad_reg_entry | Get-Member | Select-String Debugger)
+            $notepad_reg_entry_exist = (Get-ItemProperty -Path $notepad_reg_path | Get-Member | Select-String Debugger)
             if ($stuff -match "restore") {
                 if ($notepad_reg_entry_exist) {
                     sudo Remove-ItemProperty -Path $notepad_reg_path -Name Debugger
                 }
             } else {
-                $my_notepad = $(if (!$stuff) {
-                        """D:\Scoop\apps\notepad3\current\Notepad3.exe"" /z"
+                sudo -d pwsh -nop -c {
+                    $notepad_reg_path = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
+                    $notepad_reg_entry_exist = (Get-ItemProperty -Path $notepad_reg_path | Get-Member | Select-String Debugger)
+                    $my_notepad = $(if (!$stuff) {
+                            """D:\Scoop\apps\notepad3\current\Notepad3.exe"" /z"
+                        } else {
+                            $stuff
+                        })
+                    Set-ItemProperty -Path $notepad_reg_path -Name UseFilter -Value 0 -Force  # unset UseFilter, to enable image execution
+                    if (!$notepad_reg_entry_exist) {
+                        New-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force 
                     } else {
-                        $stuff
-                    })
-                sudo Set-ItemProperty -Path $notepad_reg_path -Name UseFilter -Value 0 -Force # unset UseFilter, to enable image execution
-                if (!$notepad_reg_entry_exist) {
-                    sudo New-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force
-                } else {
-                    sudo Set-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force
-                    [Console]::Write("Debugger is set to ")
-                    [Console]::ForegroundColor = [ConsoleColor]::Blue
-                    Write-Output $my_notepad
-                    [Console]::ResetColor();
+                        Set-ItemProperty -Path $notepad_reg_path -Name Debugger -Value $my_notepad -Force
+                        [Console]::Write("Debugger is set to ")
+                        [Console]::ForegroundColor = [ConsoleColor]::Blue
+                        Write-Output $my_notepad
+                        [Console]::ResetColor();
+                    }
                 }
             }
         }
@@ -174,7 +177,7 @@ $systool_cmdList = [ordered] @{
     "fix_wsl" = @(
         @{
             "cuda" = { # WSL2 libcuda.so is not symbolic warning
-                sudo pwsh -nop -c {
+                sudo -d pwsh -nop -c {
                     Set-Location "C:\Windows\System32\lxss\lib"
                     Remove-Item libcuda.so.1
                     Remove-Item libcuda.so
