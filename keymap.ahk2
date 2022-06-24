@@ -1,0 +1,26 @@
+#SingleInstance Force
+
+; this avoid the issue that holding ctrl+shift will open office
+; ================================================================
+; whenever `win`/`alt` is released, windows sends extra mask key, which defaults to `ctrl`.
+; while `win+ctrl+alt+shift` is the office shortcut,
+; windows somehow mistakenly think win+alt is pressed with ctrl held
+;
+; other shortcut could also be triggered by holding ctrl+shift, e.g. alt+r
+; they can also be fixed by this
+A_MenuMaskKey := "vkFF" ; change mask key to no-op
+
+#Include "utility.ahk2"
+
+;
+; Shortcuts
+;
+
+#h::^+Backspace
+#!v:: Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe") ; don't directly use "code" because a bug caused by scoop's shim machanism
+#!e:: Invoker("ahk_class TTOTAL_CMD", "D:\totalcmd\TotalCMD64.exe")
+#!c:: Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
+CapsLock & a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
+CapsLock & q::#`    ; quake mode of wt
+CapsLock & w::^!+r  ; powertoys run
+^#s:: Run("D:\Scoop\apps\autohotkey\current\WindowSpy.ahk")

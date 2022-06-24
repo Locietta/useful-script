@@ -1,0 +1,39 @@
+#SingleInstance Force
+
+; any apps opened in an elevated script will run in administrator mode
+
+if (not A_IsAdmin) {
+    try {
+        Run '*RunAs "' A_AhkPath '" /restart "' A_ScriptFullPath '"'
+    } catch Error as e {
+        MsgBox Format("{1}: {2}.`n`nFile:`t{3}`nLine:`t{4}`nWhat:`t{5}`nStack:`n{6}"
+            , type(e), e.Message, e.File, e.Line, e.What, e.Stack)
+        ExitApp(-1)
+    }
+} else {
+    ; startup apps/scripts with elevated privilege
+    ; So multiple UAC popups are merged into one!
+    Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\WSL2-static-ip.bat")
+    Run("D:\Clash\Clash for Windows\Clash for Windows.exe")
+    Run("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
+}
+
+#Include "utility.ahk2"
+
+;
+; Shortcuts
+;
+
+#^z::+!Backspace
+#k::Invoker("ahk_exe Clash for Windows.exe", "D:\Clash\Clash for Windows\Clash for Windows.exe")
+#y::Invoker("ahk_exe Taskmgr.exe", "taskmgr")
+#f::#v
+#w::#1
+
+; pass hotkeys to non-SU script, this avoid programs being elevated
+#e::#!e
+#v::#!v
+#c::#!c
+
+CapsLock & s::Run("wt")
+
