@@ -1,5 +1,7 @@
 #SingleInstance Force
 
+#Requires AutoHotkey v2.0-a
+
 ; any apps opened in an elevated script will run in administrator mode
 
 if (not A_IsAdmin) {

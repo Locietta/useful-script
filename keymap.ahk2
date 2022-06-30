@@ -1,5 +1,7 @@
 #SingleInstance Force
 
+#Requires AutoHotkey v2.0-a
+
 ; this avoid the issue that holding ctrl+shift will open office
 ; ================================================================
 ; whenever `win`/`alt` is released, windows sends extra mask key, which defaults to `ctrl`.
