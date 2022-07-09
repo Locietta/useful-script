@@ -2,6 +2,8 @@
 
 #Requires AutoHotkey v2.0-a
 
+#Include "utility.ahk2"
+
 ; this avoid the issue that holding ctrl+shift will open office
 ; ================================================================
 ; whenever `win`/`alt` is released, windows sends extra mask key, which defaults to `ctrl`.
@@ -12,7 +14,11 @@
 ; they can also be fixed by this
 A_MenuMaskKey := "vkFF" ; change mask key to no-op
 
-#Include "utility.ahk2"
+; frp proxy for rdp/smb, useful for remote desktop
+if !ProcessExist("frpc.exe") {
+	; avoid duplicate when I reload this script (e.g. for debug or new feature)
+	Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat")
+}
 
 ;
 ; Shortcuts
