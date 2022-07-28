@@ -183,6 +183,7 @@ $systool_cmdList = [ordered] @{
                     Remove-Item libcuda.so
                     wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so.1
                     wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so
+                    wsl --shutdown Arch
                     Write-Output "WSL2 libcuda symbolic is repaired!"
                 }
             }
