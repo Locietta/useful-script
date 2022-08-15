@@ -193,7 +193,7 @@ $systool_cmdList = [ordered] @{
             if ($locale_objs.ContainsKey($stuff)) {
                 &$locale_objs.$stuff
             } else {
-                Write-Output "Can't change to unsupported locale: ``$stuff``"
+                Write-Output "``$stuff`` isn't a valid subcommand of ``fix_wsl``!"
             }
         }
     )
