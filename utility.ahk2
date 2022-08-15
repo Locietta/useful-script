@@ -3,16 +3,16 @@
 ; * utility functions for AHKv2 scripts
 ; * use `#Include` to import functions here into your own scripts
 
-; Note: in ahk v2, vars in functions are default to local, 
+; Note: in ahk v2, vars in functions are default to local,
 ; so needn't specify local to avoid name collision ^_^
-; 
+;
 
-; Toggle the program window `WinTitle`. If not exist, it'll try to launch 
+; Toggle the program window `WinTitle`. If not exist, it'll try to launch
 ; with `RunCommand` \
-; 
+;
 ; e.g. use Win+Alt+Space to toggle Windows Termianl: \
 ; #!Space:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
-; 
+;
 Invoker(WinTitle, RunCommand) {
     ; WinTitle: to match the window
     ; runCommand: command used to open app
@@ -34,13 +34,14 @@ Invoker(WinTitle, RunCommand) {
     }
 }
 
-; Run given program `Task` if it hasn't started. By default, 
+; Run given program `Task` if it hasn't started. By default,
 ; the filename of `Task` is inferred as process name. \
 ; \
 ; But if your `task` is complex script,
-; you may manually specify `ProcessMatcher`
-; 
+; you may manually specify `ProcessMatcher`(case-insensitive Name or PID).
+;
 RunIfNotExist(Task, ProcessMatcher?) {
+    local InferredProcessMatcher
     if !IsSet(ProcessMatcher) {
         SplitPath(Task, &InferredProcessMatcher)
     } else {
@@ -51,3 +52,20 @@ RunIfNotExist(Task, ProcessMatcher?) {
         Run(Task)
     }
 }
+
+; Count the number with specified name(case-insensitive) \
+;
+; This is useful because all built-in ahk process functions are case-insensitive,
+; some possible workarounds may need process count info.
+ProcessCount(CaseInsensitiveName) {
+    ; Implemented using COM
+    Count := 0
+    for Process in ComObjGet("winmgmts:").ExecQuery("Select * from Win32_Process") {
+        if Process.Name = "everything.exe" {
+            Count += 1
+        }
+    }
+    return Count
+}
+
+; TODO: implement case-sensitive process functions, something like ProcessExistS etc.
