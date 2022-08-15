@@ -15,10 +15,8 @@
 A_MenuMaskKey := "vkFF" ; change mask key to no-op
 
 ; frp proxy for rdp/smb, useful for remote desktop
-if !ProcessExist("frpc.exe") {
-	; avoid duplicate when I reload this script (e.g. for debug or new feature)
-	Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat")
-}
+RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
+RunIfNotExist("D:\Scoop\apps\everything\current\Everything.exe")
 
 ;
 ; Shortcuts
@@ -27,8 +25,11 @@ if !ProcessExist("frpc.exe") {
 #h::^+Backspace
 #!v:: Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe") ; don't directly use "code" because a bug caused by scoop's shim machanism
 #!e:: Invoker("ahk_class TTOTAL_CMD", "D:\totalcmd\TotalCMD64.exe")
+; use "ahk_exe msedge.exe" will also invoke web apps packaged by edge...
 #!c:: Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
+
 CapsLock & a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
 CapsLock & q::#`    ; quake mode of wt
 CapsLock & w::^!+r  ; powertoys run
+
 ^#s:: Run("D:\Scoop\apps\autohotkey\current\WindowSpy.ahk")

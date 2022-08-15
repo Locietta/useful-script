@@ -3,12 +3,17 @@
 ; * utility functions for AHKv2 scripts
 ; * use `#Include` to import functions here into your own scripts
 
-; Usage 
-; ======================================
-; use Win+Alt+Space to toggle Windows Termianl:
+; Note: in ahk v2, vars in functions are default to local, 
+; so needn't specify local to avoid name collision ^_^
+; 
+
+; Toggle the program window `WinTitle`. If not exist, it'll try to launch 
+; with `RunCommand` \
+; 
+; e.g. use Win+Alt+Space to toggle Windows Termianl: \
 ; #!Space:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
 ; 
-Invoker(WinTitle, runCommand) {
+Invoker(WinTitle, RunCommand) {
     ; WinTitle: to match the window
     ; runCommand: command used to open app
     if (hwnd := WinExist(WinTitle)) {
@@ -24,7 +29,25 @@ Invoker(WinTitle, runCommand) {
             WinMinimize(hwnd)
         }
     } else {
-        Run(runCommand)
+        Run(RunCommand)
         WinActivate(WinWait(WinTitle))	; activate the new window
+    }
+}
+
+; Run given program `Task` if it hasn't started. By default, 
+; the filename of `Task` is inferred as process name. \
+; \
+; But if your `task` is complex script,
+; you may manually specify `ProcessMatcher`
+; 
+RunIfNotExist(Task, ProcessMatcher?) {
+    if !IsSet(ProcessMatcher) {
+        SplitPath(Task, &InferredProcessMatcher)
+    } else {
+        InferredProcessMatcher := ProcessMatcher
+    }
+
+    if !ProcessExist(InferredProcessMatcher) {
+        Run(Task)
     }
 }
