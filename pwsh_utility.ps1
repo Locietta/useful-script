@@ -79,6 +79,9 @@ $systool_cmdList = [ordered] @{
             "hyperv" = {
                 sudo -d bcdedit /set hypervisorlaunchtype auto
             }
+            "ssh" = {
+                sudo -d net start sshd
+            }
         }, 
         {
             param([hashtable] $enable_objs = $systool_cmdList.enable[0])
@@ -96,6 +99,9 @@ $systool_cmdList = [ordered] @{
             }
             "hyperv" = {
                 sudo -d bcdedit /set hypervisorlaunchtype off
+            }
+            "ssh" = {
+                sudo -d net stop sshd
             }
         },
         {
@@ -185,6 +191,14 @@ $systool_cmdList = [ordered] @{
                     wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so
                     wsl --shutdown Arch
                     Write-Output "WSL2 libcuda symbolic is repaired!"
+                }
+            }
+
+            "ip" = { # static ip
+                # see https://github.com/microsoft/WSL/issues/4210#issuecomment-648570493
+                sudo -d pwsh -nop -c {
+                    wsl -d Arch -u root ip addr add 172.28.51.142/20 broadcast 172.28.63.255 dev eth0 label eth0:1
+                    netsh interface ip add address "vEthernet (WSL)" 172.28.48.1 255.255.240.0
                 }
             }
         },
