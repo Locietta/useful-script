@@ -65,7 +65,7 @@ function gb {
 }
 
 function su {
-    gsudo.exe
+    sudo.exe
 }
 
 # Implementation of `systool`
