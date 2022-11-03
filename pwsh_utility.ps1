@@ -79,7 +79,7 @@ $systool_cmdList = [ordered] @{
             "hyperv" = {
                 sudo -d bcdedit /set hypervisorlaunchtype auto
             }
-            "ssh" = {
+            "ssh"    = {
                 sudo -d net start sshd
             }
         }, 
@@ -100,7 +100,7 @@ $systool_cmdList = [ordered] @{
             "hyperv" = {
                 sudo -d bcdedit /set hypervisorlaunchtype off
             }
-            "ssh" = {
+            "ssh"    = {
                 sudo -d net stop sshd
             }
         },
@@ -119,9 +119,11 @@ $systool_cmdList = [ordered] @{
         },
         {
             if ($stuff -match "^([1-9]\d*|0)$") {
-                Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber" -Value $stuff 
-                New-NetFirewallRule -DisplayName 'RDPPORTLatest-TCP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol TCP -LocalPort $stuff 
-                New-NetFirewallRule -DisplayName 'RDPPORTLatest-UDP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol UDP -LocalPort $stuff
+                sudo -d pwsh -nop -nol -c {
+                    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber" -Value $stuff 
+                    New-NetFirewallRule -DisplayName 'RDPPORTLatest-TCP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol TCP -LocalPort $stuff 
+                    New-NetFirewallRule -DisplayName 'RDPPORTLatest-UDP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol UDP -LocalPort $stuff
+                }
             } else {
                 Write-Output "Not a valid port number: ``$stuff``"
             }
@@ -194,7 +196,7 @@ $systool_cmdList = [ordered] @{
                 }
             }
 
-            "ip" = { # static ip
+            "ip"   = { # static ip
                 # see https://github.com/microsoft/WSL/issues/4210#issuecomment-648570493
                 sudo -d pwsh -nop -c {
                     wsl -d Arch -u root ip addr add 172.28.51.142/20 broadcast 172.28.63.255 dev eth0 label eth0:1
