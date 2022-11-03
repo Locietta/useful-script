@@ -6,6 +6,8 @@
 #Requires -Version 7
 $error_count = 0;
 
+$Env:VIRTUAL_ENV_DISABLE_PROMPT=1
+
 function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
     $upper_info = @(
