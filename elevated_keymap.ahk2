@@ -2,6 +2,8 @@
 
 #Requires AutoHotkey v2.0-a
 
+#Include "utility.ahk2"
+
 ; any apps opened in an elevated script will run in administrator mode
 
 if (not A_IsAdmin) {
@@ -19,8 +21,6 @@ if (not A_IsAdmin) {
     RunIfNotExist("D:\Clash\Clash for Windows\Clash for Windows.exe")
     RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
 }
-
-#Include "utility.ahk2"
 
 ;
 ; Shortcuts
