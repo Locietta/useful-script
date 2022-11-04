@@ -37,5 +37,5 @@ if (not A_IsAdmin) {
 #v::#!v
 #c::#!c
 
-CapsLock & s::Run("wt")
+#+s::Invoker("Administrator: PowerShell 7", "wt")
 

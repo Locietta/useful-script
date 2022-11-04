@@ -28,8 +28,8 @@ Run("D:\Scoop\apps\everything\current\Everything.exe -startup") ; everything wil
 ; use "ahk_exe msedge.exe" will also invoke web apps packaged by edge...
 #!c::Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
 
-CapsLock & a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
-CapsLock & q::#`    ; quake mode of wt
-CapsLock & w::^!+r  ; powertoys run
+#+a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
+#+q::#`    ; quake mode of wt
+#+w::^!+r  ; powertoys run
 
 ^#s:: Run("D:\Scoop\apps\autohotkey\current\WindowSpy.ahk")
