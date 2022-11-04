@@ -61,7 +61,7 @@ ProcessCount(CaseInsensitiveName) {
     ; Implemented using COM
     Count := 0
     for Process in ComObjGet("winmgmts:").ExecQuery("Select * from Win32_Process") {
-        if Process.Name = "everything.exe" {
+        if Process.Name = CaseInsensitiveName {
             Count += 1
         }
     }
