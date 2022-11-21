@@ -32,4 +32,4 @@ Run("D:\Scoop\apps\everything\current\Everything.exe -startup") ; everything wil
 #+q::#`    ; quake mode of wt
 #+w::^!+r  ; powertoys run
 
-^#s:: Run("D:\Scoop\apps\autohotkey\current\WindowSpy.ahk")
+^#s:: Run("D:\.config\.script\winSpy.ahk2")
