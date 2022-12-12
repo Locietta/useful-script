@@ -47,14 +47,14 @@ function png2ico {
 
 function time {
     if (-not $args.Length) {
-        Write-Host -ForegroundColor Magenta ('Usage: time [command [arg0 arg1 ...]]');
-        return;
+        Write-Host -ForegroundColor Magenta ('Usage: time [command [arg0 arg1 ...]]')
+        return
     }
     $command_str = ($args -join ' ') # to surpass the overhead of passing array in `iex @args`
-    $start = Get-Date;
-    Invoke-Expression $command_str;
-    $end = Get-Date;
-    Write-Host -ForegroundColor Magenta ('Total Runtime: ' + ($end - $start).TotalSeconds);
+    $start = Get-Date
+    Invoke-Expression $command_str
+    $end = Get-Date
+    Write-Host -ForegroundColor Magenta ('Total Runtime: ' + ($end - $start).TotalSeconds)
 }
 
 function gb {
@@ -176,7 +176,7 @@ $systool_cmdList = [ordered] @{
                         [Console]::Write("Debugger is set to ")
                         [Console]::ForegroundColor = [ConsoleColor]::Blue
                         Write-Output $my_notepad
-                        [Console]::ResetColor();
+                        [Console]::ResetColor()
                     }
                 }
             }
@@ -233,5 +233,13 @@ function systool (
         &$systool_cmdList.$subCommand[1]
     } else {
         Write-Output "Invalid subcommand: ``$subCommand``"
+    }
+}
+
+function Enable-Choco {
+    # Chocolatey profile
+    $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    if (Test-Path($ChocolateyProfile)) {
+        Import-Module "$ChocolateyProfile"
     }
 }
