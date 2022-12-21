@@ -1,5 +1,5 @@
-; autohotkey v2 beta.3
-;
+#Requires AutoHotkey v2.0
+
 ; * utility functions for AHKv2 scripts
 ; * use `#Include` to import functions here into your own scripts
 

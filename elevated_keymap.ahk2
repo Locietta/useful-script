@@ -1,6 +1,6 @@
 #SingleInstance Force
 
-#Requires AutoHotkey v2.0-a
+#Requires AutoHotkey v2.0
 
 #Include "utility.ahk2"
 

@@ -2,6 +2,8 @@
 ; Window Spy
 ;
 
+#Requires AutoHotkey v2.0
+
 #NoTrayIcon
 #SingleInstance Ignore
 SetWorkingDir(A_ScriptDir)
