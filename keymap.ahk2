@@ -15,16 +15,16 @@
 A_MenuMaskKey := "vkFF"	; change mask key to no-op
 
 ; frp proxy for rdp/smb, useful for remote desktop
-RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
-Run("D:\Scoop\apps\everything\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
+RunIfNotExist("F:\.config\.script\silent-bat-wrapper.vbs F:\.config\tunnel_config\frp_task.bat", "frpc.exe")
+Run("F:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
 
 ;
 ; Shortcuts
 ;
 
 #h::^+Backspace
-#!v::Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe")	; don't directly use "code" because a bug caused by scoop's shim machanism
-#!e:: Invoker("ahk_class TTOTAL_CMD", "D:\totalcmd\TotalCMD64.exe")
+#!v::Invoker("ahk_exe Code.exe", "F:\Scoop\apps\vscode\current\Code.exe")	; don't directly use "code" because a bug caused by scoop's shim machanism
+#!e:: Invoker("ahk_class TTOTAL_CMD", "F:\TotalCMD64\TotalCMD64.exe")
 ; use "ahk_exe msedge.exe" will also invoke web apps packaged by edge...
 #!c::Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
 
@@ -32,4 +32,4 @@ Run("D:\Scoop\apps\everything\current\Everything.exe -startup") ; everything wil
 #+q::#`    ; quake mode of wt
 ^#x::^!+r  ; listary run
 
-^#s:: Run("D:\.config\.script\winSpy.ahk2")
+^#s:: Run("F:\.config\.script\winSpy.ahk2")

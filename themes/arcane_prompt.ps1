@@ -12,7 +12,7 @@ function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
     $upper_info = @(
         # Host
-        @("$env:USERNAME@$env:COMPUTERNAME", [ConsoleColor]::Green),
+        @("Locietta@$env:COMPUTERNAME", [ConsoleColor]::Green),
         # Current Path
         @("$(($pwd.path.Replace($global:HOME, '~')).TrimEnd('\'))", [ConsoleColor]::Blue),
         # Git Status

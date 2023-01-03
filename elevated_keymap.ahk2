@@ -17,8 +17,8 @@ if (not A_IsAdmin) {
 } else {
     ; startup apps/scripts with elevated privilege
     ; So multiple UAC popups are merged into one!
-    Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\WSL2-static-ip.bat")
-    RunIfNotExist("D:\Clash\Clash for Windows\Clash for Windows.exe")
+    Run("F:\.config\.script\silent-bat-wrapper.vbs F:\.config\.script\injecter\WSL2-static-ip.bat")
+    RunIfNotExist("F:\Program Files\Clash for Windows\Clash for Windows.exe")
     RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
     RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 }
@@ -28,7 +28,7 @@ if (not A_IsAdmin) {
 ;
 
 #^z::+!Backspace
-#k::Invoker("ahk_exe Clash for Windows.exe", "D:\Clash\Clash for Windows\Clash for Windows.exe")
+#k::Invoker("ahk_exe Clash for Windows.exe", "F:\Program Files\Clash for Windows\Clash for Windows.exe")
 #y::Invoker("ahk_exe Taskmgr.exe", "taskmgr")
 #f::#v
 #w::#1
