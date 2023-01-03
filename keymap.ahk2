@@ -16,7 +16,10 @@ A_MenuMaskKey := "vkFF"	; change mask key to no-op
 
 ; frp proxy for rdp/smb, useful for remote desktop
 RunIfNotExist("F:\.config\.script\silent-bat-wrapper.vbs F:\.config\tunnel_config\frp_task.bat", "frpc.exe")
-Run("F:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
+; syncthing auto-startup for WSL2-windows sync
+RunIfNotExist("F:\.config\.script\silent-bat-wrapper.vbs syncthing --no-browser --no-restart --logflags=0", "syncthing.exe")
+; everything will never duplicate itself, so no need to use `RunIfNotExist`
+Run("F:\Scoop\apps\everything-lite\current\Everything.exe -startup") 
 
 ;
 ; Shortcuts
