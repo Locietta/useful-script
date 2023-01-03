@@ -19,8 +19,7 @@ if (not A_IsAdmin) {
     ; So multiple UAC popups are merged into one!
     Run("F:\.config\.script\silent-bat-wrapper.vbs F:\.config\.script\injecter\WSL2-static-ip.bat")
     RunIfNotExist("F:\Program Files\Clash for Windows\Clash for Windows.exe")
-    RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
-    RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
+    RunIfNotExist("C:\Users\23245\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
 }
 
 ;
