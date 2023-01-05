@@ -1,3 +1,3 @@
 @echo off
 
-D:\msys64\usr\bin\rm.exe %*
+%MSYS2%\usr\bin\rm.exe %*
