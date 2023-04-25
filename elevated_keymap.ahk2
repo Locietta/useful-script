@@ -20,6 +20,7 @@ if (not A_IsAdmin) {
     Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\WSL2-static-ip.bat")
     RunIfNotExist("D:\Clash\Clash for Windows\Clash for Windows.exe")
     RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
+    RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 }
 
 ;
@@ -37,5 +38,5 @@ if (not A_IsAdmin) {
 #v::#!v
 #c::#!c
 
-#+s::Invoker("Administrator: PowerShell 7", "wt")
+;#+s::Invoker("Administrator: PowerShell 7", "wt")
 

@@ -30,6 +30,6 @@ Run("D:\Scoop\apps\everything\current\Everything.exe -startup") ; everything wil
 
 #+a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
 #+q::#`    ; quake mode of wt
-#+w::^!+r  ; powertoys run
+^#x::^!+r  ; listary run
 
 ^#s:: Run("D:\.config\.script\winSpy.ahk2")
