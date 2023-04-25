@@ -189,9 +189,8 @@ $systool_cmdList = [ordered] @{
                     Set-Location "C:\Windows\System32\lxss\lib"
                     Remove-Item libcuda.so.1
                     Remove-Item libcuda.so
-                    wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so.1
-                    wsl -d Arch -- ln -s libcuda.so.1.1 libcuda.so
-                    wsl --shutdown Arch
+                    wsl --system -- ln -s libcuda.so.1.1 libcuda.so.1
+                    wsl --system -- ln -s libcuda.so.1.1 libcuda.so
                     Write-Output "WSL2 libcuda symbolic is repaired!"
                 }
             }
