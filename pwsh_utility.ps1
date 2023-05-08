@@ -120,10 +120,11 @@ $systool_cmdList = [ordered] @{
         {
             if ($stuff -match "^([1-9]\d*|0)$") {
                 sudo -d pwsh -nop -nol -c {
-                    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber" -Value $stuff 
+                    param($stuff)
+                    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name 'PortNumber' -Value $stuff 
                     New-NetFirewallRule -DisplayName 'RDPPORTLatest-TCP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol TCP -LocalPort $stuff 
                     New-NetFirewallRule -DisplayName 'RDPPORTLatest-UDP-In' -Profile 'Public' -Direction Inbound -Action Allow -Protocol UDP -LocalPort $stuff
-                }
+                } -args $stuff
             } else {
                 Write-Output "Not a valid port number: ``$stuff``"
             }
