@@ -68,6 +68,11 @@ function su {
     sudo.exe
 }
 
+function vsenv {
+    Import-Module "$env:VS2022INSTALLDIR\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+    Enter-VsDevShell ef99326c -SkipAutomaticLocation -DevCmdArguments "-arch=x64 -host_arch=x64"
+}
+
 # Implementation of `systool`
 
 $systool_cmdList = [ordered] @{
