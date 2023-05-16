@@ -20,6 +20,8 @@ const rules = [
   // custom rules
   "DOMAIN,xn--4gq62f52gdss.com,DIRECT", // I know many are using it
   "RULE-SET,applications,DIRECT",
+  "PROCESS-NAME,ncat.exe,DIRECT",
+  "PROCESS-NAME,ncat,DIRECT",
   "PROCESS-NAME,frpc.exe,DIRECT",
   "PROCESS-NAME,frpc,DIRECT",
   "PROCESS-NAME,wireguard.exe,DIRECT",
