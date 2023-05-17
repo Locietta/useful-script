@@ -9,6 +9,9 @@
     file: .../path/to/clash_parser.js
  ```
  *
+ * This parser can produce lots of unselectable proxy groups, so it's recommended to 
+ * enable 'Proxies > Hide unselectable Group' in cfw settings.
+ * 
  */
 
 /// config url-test
