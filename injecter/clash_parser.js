@@ -39,8 +39,12 @@ const rules = [
   "DOMAIN-SUFFIX,wolframcdn.com,PROXY",
   "DOMAIN-SUFFIX,ieee.org,DIRECT",
   "DOMAIN-SUFFIX,acm.org,DIRECT",
-  "DOMAIN-SUFFIX,stackoverflow.com,DIRECT",
-  "DOMAIN-SUFFIX,stackexchange.com,DIRECT",
+
+  // you would like to not proxy stackoverflow & stackexchange
+  // if your ip is kinda dirty and blocked by the website's firewall
+
+  //"DOMAIN-SUFFIX,stackoverflow.com,DIRECT",
+  //"DOMAIN-SUFFIX,stackexchange.com,DIRECT",
   "DOMAIN-SUFFIX,ppy.sh,DIRECT",
   "DOMAIN-SUFFIX,bog.ac,DIRECT",
   "DOMAIN,clash.razord.top,DIRECT",
