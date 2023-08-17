@@ -45,6 +45,7 @@ const rules = [
   "DOMAIN-SUFFIX,bog.ac,DIRECT",
   "DOMAIN,clash.razord.top,DIRECT",
   "DOMAIN,cn.bing.com,DIRECT",
+  "DOMAIN,dl.google.com,PROXY", // for golang install etc.
   "DOMAIN-SUFFIX,edu.cn,DIRECT",
 
   // rules for rule providers
