@@ -59,9 +59,7 @@ function time {
 
 function gb {
     for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
-    if ($_dir) {
-        git status
-    }
+    return $(Get-Content "$_dir/.git/HEAD" | Split-Path -Leaf)
 }
 
 function su {
