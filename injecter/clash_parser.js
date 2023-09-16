@@ -43,6 +43,7 @@ const rules = [
   "DOMAIN-SUFFIX,stackexchange.com,DIRECT",
   "DOMAIN-SUFFIX,ppy.sh,DIRECT",
   "DOMAIN-SUFFIX,bog.ac,DIRECT",
+  "DOMAIN-SUFFIX,nexushd.org,DIRECT",
   "DOMAIN,clash.razord.top,DIRECT",
   "DOMAIN,cn.bing.com,DIRECT",
   "DOMAIN,dl.google.com,PROXY", // for golang install etc.
