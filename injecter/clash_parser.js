@@ -19,9 +19,27 @@ const test_interval = 150;
 const test_tolerance = 250;
 const test_url = "http://www.gstatic.com/generate_204";
 
+// Fxxk up EasyConnect
+const easy_connect = {
+  name: "EasyConnectSocks5",
+  type: "socks5",
+  server: "127.0.0.1",
+  port: "1080",
+};
+const easy_connect_http = {
+  name: "EasyConnectHttp",
+  type: "socks5",
+  server: "127.0.0.1",
+  port: "1081",
+};
+
 const rules = [
   // custom rules
-  "DOMAIN,xn--4gq62f52gdss.com,DIRECT", // I know many are using it
+  "IP-CIDR,10.0.0.0/24,🚸 EasyConnect开关",
+  "DOMAIN-SUFFIX,zju.edu.cn,🚸 EasyConnect开关",
+  "DOMAIN-SUFFIX,cc98.org,🚸 EasyConnect开关",
+  "DOMAIN-SUFFIX,cnki.net,🚸 EasyConnect开关",
+
   "RULE-SET,applications,DIRECT",
   "PROCESS-NAME,ncat.exe,DIRECT",
   "PROCESS-NAME,ncat,DIRECT",
@@ -70,6 +88,11 @@ const rules = [
 
 /// extract special proxy group, so that we can directly use them later
 /// otherwise, we need to find them in proxy_groups by querying their name...
+const easy_connect_group = {
+  name: "🚸 EasyConnect开关",
+  type: "select",
+  proxies: ["DIRECT", "EasyConnectSocks5", "EasyConnectHttp"],
+};
 const core_proxy = {
   name: "PROXY",
   type: "select",
@@ -101,6 +124,7 @@ const proxy_groups = [
     type: "select",
     proxies: ["绕过大陆丨黑名单(GFWlist)", "绕过大陆丨白名单(Whitelist)"],
   },
+  easy_connect_group,
   core_proxy,
   manual_selector,
   auto_selector,
@@ -300,6 +324,9 @@ module.exports.parse = async (raw, { yaml }) => {
       proxies: proxies,
     });
   }
+
+  config.proxies.push(easy_connect);
+  config.proxies.push(easy_connect_http);
 
   const parsed_config = {
     ...config,
