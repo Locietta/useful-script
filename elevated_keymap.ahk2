@@ -18,7 +18,7 @@ if (not A_IsAdmin) {
     ; startup apps/scripts with elevated privilege
     ; So multiple UAC popups are merged into one!
     Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\WSL2-static-ip.bat")
-    RunIfNotExist("D:\Clash\Clash for Windows\Clash for Windows.exe")
+    RunIfNotExist("D:\Clash\Clash for Windows Meta\Clash for Windows.exe")
     RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
     RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 }
