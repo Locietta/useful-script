@@ -17,6 +17,7 @@ A_MenuMaskKey := "vkFF"	; change mask key to no-op
 ; frp proxy for rdp/smb, useful for remote desktop
 RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
 Run("D:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
+RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\zju-rvpn.bat", "zju-connect.exe")
 
 ;
 ; Shortcuts
