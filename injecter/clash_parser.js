@@ -28,7 +28,7 @@ const easy_connect = {
 };
 const easy_connect_http = {
   name: "EasyConnectHttp",
-  type: "socks5",
+  type: "http",
   server: "127.0.0.1",
   port: "1081",
 };
