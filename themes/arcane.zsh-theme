@@ -3,7 +3,7 @@
 # disable the default virtualenv fetcher
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# diable default conda env display
+# disable default conda env display
 # conda config --set changeps1
 
 # customized venv-fetcher
