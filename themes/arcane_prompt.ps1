@@ -53,6 +53,7 @@ function Get-VirtualEnvName {
     }
 }
 
+# Rewritten from a bash gist, see https://gist.github.com/bingzhangdai/dd4e283a14290c079a76c4ba17f19d69
 function Get-GitBranchQuick { # quickly fetch current git branch 
     for ($_dir = "$pwd"; $_dir -and -not $(Test-Path "$_dir/.git/HEAD"); $_dir = Split-Path $_dir) {  }
     if ($_dir) {
