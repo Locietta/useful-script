@@ -1,17 +1,8 @@
 /**
- * js parser for cfw
- * 
- * To use this parser, add the following line to your cfw yaml parser file:
- * 
- ```yaml
-  parsers:
-  - reg: ^.*$ # match all subscriptions
-    file: .../path/to/clash_parser.js
- ```
+ * rule preprocess script for clash-verge(-rev)
  *
- * This parser can produce lots of unselectable proxy groups, so it's recommended to 
- * enable 'Proxies > Hide unselectable Group' in cfw settings.
- * 
+ * To use this parser, add a script configuration in subscription panel,
+ * and copy this file to the script editor.
  */
 
 /// config url-test
@@ -110,12 +101,14 @@ const auto_selector = {
   interval: test_interval,
   torlerance: test_tolerance,
   lazy: true,
+  hidden: true,
 };
 const fallback_selector = {
   name: "🔧 故障转移",
   type: "fallback",
   url: test_url,
   interval: test_interval,
+  hidden: true,
 };
 
 const proxy_groups = [
@@ -140,6 +133,7 @@ const proxy_groups = [
     url: "http://www.gstatic.com/generate_204",
     interval: 86400,
     proxies: ["DIRECT"],
+    hidden: true,
   },
   {
     name: "绕过大陆丨白名单(Whitelist)",
@@ -147,6 +141,7 @@ const proxy_groups = [
     url: "http://www.gstatic.com/generate_204",
     interval: 86400,
     proxies: ["PROXY"],
+    hidden: true,
   },
 ];
 
@@ -293,11 +288,15 @@ const regions = [
   ["法国", /法国|FR|(F|f)rance/, "🇫🇷"],
 ];
 
-module.exports.parse = async (raw, { yaml }) => {
-  const config = yaml.parse(raw);
-  if (!config.proxies) return raw;
-
-  // console.log(config);
+function main(config) {
+  const proxy_count = config?.proxies?.length ?? 0;
+  const proxy_group_Count =
+    typeof config?.["proxy-providers"] === "object"
+      ? Object.keys(config["proxy-providers"]).length
+      : 0;
+  if (proxy_count === 0 && proxy_group_Count === 0) {
+    throw new Error("No proxies or proxy groups found in the config.");
+  }
   const proxy_names = config.proxies
     .filter((proxy) => !proxy_excluder(proxy.name))
     .map((proxy) => proxy.name);
@@ -322,6 +321,7 @@ module.exports.parse = async (raw, { yaml }) => {
       torlerance: test_tolerance,
       lazy: true,
       proxies: proxies,
+      hidden: true,
     });
   }
 
@@ -336,7 +336,5 @@ module.exports.parse = async (raw, { yaml }) => {
     hosts: { ...config.hosts, ...hosts },
   };
 
-  // console.log("Parsed result: ", parsed_config);
-
-  return yaml.stringify(parsed_config);
-};
+  return parsed_config;
+}
