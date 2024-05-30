@@ -32,10 +32,6 @@ const rules = [
   "DOMAIN-SUFFIX,cnki.net,🚸 EasyConnect开关",
 
   "RULE-SET,applications,DIRECT",
-  "PROCESS-NAME,ncat.exe,DIRECT",
-  "PROCESS-NAME,ncat,DIRECT",
-  "PROCESS-NAME,frpc.exe,DIRECT",
-  "PROCESS-NAME,frpc,DIRECT",
   "PROCESS-NAME,wireguard.exe,DIRECT",
   "PROCESS-NAME,wireguard,DIRECT",
   "DOMAIN-SUFFIX,z-lib.org,PROXY",
