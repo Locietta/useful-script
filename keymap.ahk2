@@ -17,14 +17,19 @@ A_MenuMaskKey := "vkFF"	; change mask key to no-op
 ; frp proxy for rdp/smb, useful for remote desktop
 ;RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
 RunIfNotExist("D:\Scoop\apps\clash-verge-rev\current\Clash Verge.exe")
-Run("D:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
+;Run("D:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
 RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\zju-rvpn.bat", "zju-connect.exe")
+
+; this will add a Listary service UAC pop up...
+; it's the limitation of its protable version, we can't launch its service in advance
+; and we don't want Listary itself to be elevated
+RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 
 ;
 ; Shortcuts
 ;
 
-#h::^+Backspace
+;#h::^+Backspace
 #!v::Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe")	; don't directly use "code" because a bug caused by scoop's shim machanism
 #!e:: Invoker("ahk_class TTOTAL_CMD", "D:\totalcmd\TotalCMD64.exe")
 ; use "ahk_exe msedge.exe" will also invoke web apps packaged by edge...
@@ -32,6 +37,5 @@ RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\inje
 
 #+a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
 #+q::#`    ; quake mode of wt
-^#x::^!+r  ; listary run
 
 ^#s:: Run("D:\.config\.script\winSpy.ahk2")
