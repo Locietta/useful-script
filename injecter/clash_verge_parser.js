@@ -59,7 +59,7 @@ const rules = [
   "RULE-SET,reject,🛑 广告拦截",
   "RULE-SET,icloud,DIRECT",
   "RULE-SET,apple,DIRECT",
-  "RULE-SET,google,DIRECT",
+  "RULE-SET,google,PROXY",
   "RULE-SET,tld-not-cn,PROXY",
   "RULE-SET,gfw,PROXY",
   "RULE-SET,greatfire,PROXY",
