@@ -1,10 +1,10 @@
 # A-bit-like arcaea style theme for zsh @Locietta
 
-# disable the default virtualenv fetcher
+# disable the default virtualenv prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # disable default conda env display
-# conda config --set changeps1
+# conda config --set changeps1 false
 
 # customized venv-fetcher
 function virtualenv_info() {

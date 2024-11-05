@@ -6,7 +6,10 @@
 #Requires -Version 7
 $error_count = 0;
 
+# disable the default virtualenv prompt
 $Env:VIRTUAL_ENV_DISABLE_PROMPT=1
+# To disable default conda env display:
+# $ conda config --set changeps1 false
 
 function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
