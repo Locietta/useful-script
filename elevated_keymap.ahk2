@@ -18,7 +18,7 @@ if (not A_IsAdmin) {
     ; startup apps/scripts with elevated privilege
     ; So multiple UAC popups are merged into one!
     Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\WSL2-static-ip.bat")
-    RunIfNotExist("C:\Users\pc\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
+    RunIfNotExist("C:\Users\" A_UserName "\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
 }
 
 ;
@@ -29,7 +29,7 @@ if (not A_IsAdmin) {
 #y::Invoker("ahk_exe Taskmgr.exe", "taskmgr")
 #f::#v
 #w::#1
-#h::^+]   ; listary run
+#h::^+Right   ; listary run
 
 ; pass hotkeys to non-SU script, this avoid programs being elevated
 #e::#!e
