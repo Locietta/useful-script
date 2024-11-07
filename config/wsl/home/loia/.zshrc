@@ -29,9 +29,6 @@ zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
 zinit snippet OMZ::lib/completion.zsh
 
-## Custom Prompt
-source $HOME/.config/arcane.zsh
-
 export PATH=$HOME/.local/bin:$PATH
 
 ## Legacy Proxy Workaround
@@ -61,6 +58,10 @@ alias sysd='sudo subsystemctl shell --uid=1000 --start'
 alias notepad="$VISUAL"
 # windows style clear terminal
 alias cls="clear"
+
+## Custom Prompt
+setopt PROMPT_SUBST
+source $HOME/.config/arcane.zsh
 
 ## Manually enable auto-comp
 autoload -Uz compinit

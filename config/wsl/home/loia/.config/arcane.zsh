@@ -46,7 +46,7 @@ function git_prompt_info() {
     fi
 }
 
-PS1="%F{white}%B┌<%F{green}%n@%m%F{white}>-<%F{blue}%~%F{white}>$(git_prompt_info)
-%b%F{magenta}└<%(?::%B%F{red}×%b%F{magenta}>-<)%F{green}%*$(virtualenv_info)%F{magenta}>->%b%F{white} "
-PS2=" %F{magenta}>->>%b%F{white} " # multi-line prompt
+PS1=$'%F{white}%B┌<%F{green}%n@%m%F{white}>-<%F{blue}%~%F{white}>$(git_prompt_info)
+%b%F{magenta}└<%(?::%B%F{red}×%b%F{magenta}>-<)%F{green}%*$(virtualenv_info)%F{magenta}>->%b%F{white} '
+PS2=$' %F{magenta}>->>%b%F{white} ' # multi-line prompt
 
