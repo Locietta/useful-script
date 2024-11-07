@@ -14,12 +14,14 @@
 ; they can also be fixed by this
 A_MenuMaskKey := "vkFF"	; change mask key to no-op
 
+util_script_dir := EnvGet("UtilScriptDir")
+
 ; frp proxy for rdp/smb, useful for remote desktop
 ;RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
 RunIfNotExist("D:\Program Files\Clash Verge\Clash Verge.exe")
 ;Run("D:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
 
-; ZJU RVPN sometimes conflicts with clash, one workaround is to have clash bridge in-school access to zju-connect as a socks5 proxy. 
+; ZJU RVPN sometimes conflicts with clash, one workaround is to have clash bridge in-school access to zju-connect as a socks5 proxy.
 ; It's actually quite bugprone though... So I decide to turn it off eventually
 ;
 ;RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\zju-rvpn.bat", "zju-connect.exe")
@@ -34,12 +36,12 @@ RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 ;
 
 ;#h::^+Backspace
-#!v::Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe")	; don't directly use "code" because a bug caused by scoop's shim machanism
+#!v:: Invoker("ahk_exe Code.exe", "D:\Scoop\apps\vscode\current\Code.exe")	; don't directly use "code" because a bug caused by scoop's shim machanism
 #!e:: Invoker("ahk_class TTOTAL_CMD", "D:\totalcmd\TotalCMD64.exe")
 ; use "ahk_exe msedge.exe" will also invoke web apps packaged by edge...
-#!c::Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
+#!c:: Invoker("Microsoft​ Edge", "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default")
 
 #+a:: Invoker("ahk_exe WindowsTerminal.exe", "wt")
 #+q::#`    ; quake mode of wt
 
-^#s:: Run("D:\.config\.script\winSpy.ahk2")
+^#s:: Run(util_script_dir "\winSpy.ahk2")

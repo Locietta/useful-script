@@ -15,9 +15,11 @@ if (not A_IsAdmin) {
         ExitApp(-1)
     }
 } else {
+    util_script_dir := EnvGet("UtilScriptDir")
+
     ; startup apps/scripts with elevated privilege
     ; So multiple UAC popups are merged into one!
-    Run("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\WSL2-static-ip.bat")
+    Run(util_script_dir "\silent-bat-wrapper.vbs " util_script_dir "\injecter\WSL2-static-ip.bat")
     RunIfNotExist("C:\Users\" A_UserName "\AppData\Local\Microsoft\WindowsApps\Snipaste.exe")
 }
 

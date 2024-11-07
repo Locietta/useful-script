@@ -32,6 +32,13 @@ foreach ($path in $pathsToAdd) {
     [System.EnvironmentVariableTarget]::Machine
 )
 
+[System.Environment]::SetEnvironmentVariable(
+    "UtilScriptDir", 
+    $PSScriptRoot,
+    [System.EnvironmentVariableTarget]::Machine
+)
+
+
 # Set MSYS2 path, so we can use it in the wrappers
 # TODO: detect it automatically, now MSYS2 has to be installed at D:\msys64
 [System.Environment]::SetEnvironmentVariable(
