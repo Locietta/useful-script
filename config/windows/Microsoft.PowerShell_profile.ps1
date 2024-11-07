@@ -7,7 +7,7 @@ $env:LANG="zh_CN.UTF-8"
 $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="$Env:http_proxy"
 
 # custom prompt
-. $env:UtilScriptDir\themes\arcane_prompt.ps1
+. $env:UtilScriptDir\config\windows\arcane_prompt.ps1
 
 # custom functions
 . $env:UtilScriptDir\pwsh_utility.ps1

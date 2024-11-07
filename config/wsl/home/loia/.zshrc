@@ -27,6 +27,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet OMZ::lib/completion.zsh
 
 ## Custom Prompt
 source $HOME/.config/arcane.zsh
@@ -40,8 +41,8 @@ export https_proxy="http://$WINHOST:7890"
 export http_proxy=$https_proxy
 
 # a bug of distrod(#22), see https://github.com/nullpo-head/wsl-distrod/issues/22
-export SHELL=/usr/sbin/zsh
- 
+export SHELL=/usr/bin/zsh
+
 # for `sudo -e`
 export VISUAL="/mnt/d/Scoop/apps/Notepad2-zufuliu/current/Notepad2.exe"
 
@@ -61,3 +62,6 @@ alias notepad="$VISUAL"
 # windows style clear terminal
 alias cls="clear"
 
+## Manually enable auto-comp
+autoload -Uz compinit
+compinit
