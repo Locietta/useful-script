@@ -1,3 +1,3 @@
 @echo off
 
-D:\msys64\usr\bin\ls.exe --color %*
+%MSYS2%\usr\bin\ls.exe --color %*
