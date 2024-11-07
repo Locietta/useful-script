@@ -1,0 +1,12 @@
+[wsl2]
+# memory = 6GB
+kernelCommandLine=mitigations=off
+ipv6=true
+firewall=false
+#networkingMode=mirrored
+#dnsTunneling=true
+autoProxy=false # autoProxy with mirrored networking is extremely slow, prefer old-fashioned workaround
+#hostAddressLoopback=true
+kernel=D:\\Scoop\\apps\\xanmod-WSL2\\current\\bzImage-x64v3
+[experimental]
+sparseVhd=true

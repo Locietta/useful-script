@@ -1,0 +1,21 @@
+[user]
+	name = Locietta
+	email = locietta@gmail.com
+	signingkey = 9C563C7DC0181D70
+[http]
+	proxy = socks5h://127.0.0.1:7890
+[core]
+	editor = D://Scoop//apps//notepad2-zufuliu//current//Notepad2.exe -n
+	autocrlf = false
+	symlinks = true
+[alias]
+	unstage = reset HEAD --
+	last = log -1 HEAD
+[init]
+	defaultBranch = main
+[color]
+	ui = true
+[commit]
+	gpgSign = true
+[credential "helperselector"]
+	selected = manager

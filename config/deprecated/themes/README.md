@@ -1,6 +1,6 @@
 ## Custom Prompts
 
-These are my custom PS1 prompt - arcane:
+These are my custom PS1 currently in use:
 
 * `arcane_prompt.ps1` is native for PowerShell. To use it, you need to source this (i.e. `. path\to\arcane_prompt.ps1`) in your profile.
 * `arcane.zsh` is native for zsh. Just source it in `.zshrc` to use it. Drop dependency on oh-my-zsh, at cost with less powerful git prompt.
