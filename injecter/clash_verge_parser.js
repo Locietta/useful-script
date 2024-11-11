@@ -26,10 +26,10 @@ const easy_connect_http = {
 
 const rules = [
   // custom rules
-  "IP-CIDR,10.0.0.0/24,🚸 EasyConnect开关",
-  "DOMAIN-SUFFIX,zju.edu.cn,🚸 EasyConnect开关",
-  "DOMAIN-SUFFIX,cc98.org,🚸 EasyConnect开关",
-  "DOMAIN-SUFFIX,cnki.net,🚸 EasyConnect开关",
+  // "IP-CIDR,10.0.0.0/24,🚸 EasyConnect开关",
+  // "DOMAIN-SUFFIX,zju.edu.cn,🚸 EasyConnect开关",
+  // "DOMAIN-SUFFIX,cc98.org,🚸 EasyConnect开关",
+  // "DOMAIN-SUFFIX,cnki.net,🚸 EasyConnect开关",
 
   "RULE-SET,applications,DIRECT",
   "PROCESS-NAME,wireguard.exe,DIRECT",
@@ -113,7 +113,7 @@ const proxy_groups = [
     type: "select",
     proxies: ["绕过大陆丨黑名单(GFWlist)", "绕过大陆丨白名单(Whitelist)"],
   },
-  easy_connect_group,
+  // easy_connect_group,
   core_proxy,
   manual_selector,
   auto_selector,
