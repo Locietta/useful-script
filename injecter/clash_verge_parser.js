@@ -248,7 +248,7 @@ const hosts = {
 /** @param {string} name @returns {boolean} */
 function proxy_excluder(name) {
   // exclude nodes you don't want, e.g. high multiplier / info-only nodes
-  return name.match(/刷新|机场.com|25倍率|(T|t)raffic|(E|e)xpire/);
+  return name.match(/刷新|机场\.com|25倍率|(T|t)raffic|(E|e)xpire|www\./);
 }
 
 /// region matcher
