@@ -33,11 +33,13 @@ foreach ($alias in $forbid_alias_list) {
 function wh { Write-Host @args }
 
 function Archi {
-  D:\Scoop\apps\archwsl\current\Arch.exe $args
+  D:\Scoop\apps\archwsl\current\Arch.exe @args
 }
 
 function mklink { # warp mklink into pwsh
-  cmd /c mklink $args
+  cmd /c mklink @args
 }
 
-function su { sudo }
+# shadow Windows 24H2's sudo.exe
+function sudo { gsudo @args }
+function su { gsudo }
