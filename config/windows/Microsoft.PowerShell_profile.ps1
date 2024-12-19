@@ -23,7 +23,7 @@ Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
-$forbid_alias_list = @("ls", "rm", "where", "cp")
+$forbid_alias_list = @("ls", "rm", "where", "cp", "diff")
 # $msys2_export_list = @("pacman", "makepkg")
 
 foreach ($alias in $forbid_alias_list) {
