@@ -1,6 +1,12 @@
 # Useful-Scripts
 
-Personal scripts mostly for windows.
+My automation, keymaps & dotfiles for Windows and WSL (maybe MSYS2?).
 
-There are heavy powershell scripts as well as quick warppers written by vbscript, batch and autohotkey(v2). 
-A personal zsh theme is also included here under `themes/`.
+Use `bootstrap.ps1` to deploy on new machines. 
+
+* `config`: terminal prompts and other dotfiles
+* `injecter`: scripts used as injecters warpped for apps and services
+* `wrappers`: wrap MSYS2/WSL2 commands for Windows to use
+
+
+
