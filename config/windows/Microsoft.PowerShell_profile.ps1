@@ -12,8 +12,8 @@ $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="$Env:http_proxy"
 # custom functions
 . "$env:UtilScriptDir\pwsh_utility.ps1"
 
-# Hook `scoop search`
-function scoop { if ($args[0] -eq "search") { scoop-search.exe @($args | Select-Object -Skip 1) } else { scoop.ps1 @args } }
+# Hook `sfsu` to speedup scoop
+Invoke-Expression (&sfsu hook)
 
 # PSReadLine
 Set-PSReadLineOption -PredictionSource History

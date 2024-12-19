@@ -11,7 +11,7 @@ scoop install git
 scoop update # scoop update relies on git
 scoop bucket add Extras
 scoop bucket add sniffer https://github.com/Locietta/sniffer
-scoop install gsudo scoop-search autohotkey which
+scoop install gsudo sfsu autohotkey which
 
 ### Write PATH
 $pathsToCheck = @($PSScriptRoot, "$PSScriptRoot\wrappers", "D:\Scoop\shims")
