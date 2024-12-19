@@ -18,7 +18,7 @@ util_script_dir := EnvGet("UtilScriptDir")
 
 ; frp proxy for rdp/smb, useful for remote desktop
 ;RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\ddns_config\frp_task.bat", "frpc.exe")
-RunIfNotExist("D:\Program Files\Clash Verge\Clash Verge.exe")
+RunIfNotExist("D:\Program Files\Clash Verge\clash-verge.exe")
 ;Run("D:\Scoop\apps\everything-lite\current\Everything.exe -startup") ; everything will never duplicate itself, so no need to use `RunIfNotExist`
 
 ; ZJU RVPN sometimes conflicts with clash, one workaround is to have clash bridge in-school access to zju-connect as a socks5 proxy.
