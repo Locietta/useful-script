@@ -41,7 +41,7 @@ export http_proxy=$https_proxy
 export SHELL=/usr/bin/zsh
 
 # for `sudo -e`
-export VISUAL="/mnt/d/Scoop/apps/Notepad2-zufuliu/current/Notepad2.exe"
+export VISUAL="/mnt/d/Scoop/apps/notepad4/current/Notepad4.exe"
 
 ##### script wrappers #####
 
@@ -54,7 +54,7 @@ alias vi=vim
 alias code="/mnt/d/Scoop/apps/vscode/current/bin/code"
 # enter into systemd shell
 alias sysd='sudo subsystemctl shell --uid=1000 --start'
-# Notepad2 alias
+# Notepad4 alias
 alias notepad="$VISUAL"
 # windows style clear terminal
 alias cls="clear"

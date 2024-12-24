@@ -165,7 +165,7 @@ $systool_cmdList = [ordered] @{
                     $notepad_reg_path = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe"
                     $notepad_reg_entry_exist = (Get-ItemProperty -Path $notepad_reg_path | Get-Member | Select-String Debugger)
                     $my_notepad = $(if (!$stuff) {
-                            """D:\Scoop\apps\Notepad2-zufuliu\current\Notepad2.exe"" /z"
+                            """D:\Scoop\apps\notepad4\current\Notepad4.exe"" /z"
                         } else {
                             $stuff
                         })
