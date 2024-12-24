@@ -52,3 +52,11 @@ $startup = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 New-Item -ItemType SymbolicLink -Path "$startup\elevated_keymap.ahk2" -Target "$PSScriptRoot\elevated_keymap.ahk2"
 New-Item -ItemType SymbolicLink -Path "$startup\keymap.ahk2" -Target "$PSScriptRoot\keymap.ahk2"
 
+# symlink config files to their respective places
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitconfig" -Target "$PSScriptRoot\config\windows\.gitconfig"
+
+# symlink $PROFILE, need to create folder first
+$DocumentFolder = [Environment]::GetFolderPath("MyDocuments")
+New-Item -ItemType Directory -Force -Path "$DocumentFolder\PowerShell"
+New-Item -ItemType SymbolicLink -Path "$DocumentFolder\PowerShell\Microsoft.PowerShell_profile.ps1" -Target "$PSScriptRoot\config\windows\Microsoft.PowerShell_profile.ps1"
+
