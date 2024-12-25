@@ -43,3 +43,18 @@ function mklink { # warp mklink into pwsh
 # shadow Windows 24H2's sudo.exe
 function sudo { gsudo @args }
 function su { gsudo }
+
+# Run `mamba init && mamba init --reverse` first to make mamba.bat available.
+function mamba {
+  switch ($args[0]) {
+    "activate" {
+      conda activate ($args | Select-Object -Skip 1)
+    }
+    "deactivate" {
+      conda deactivate
+    }
+    default {
+      mamba.bat @args
+    }
+  }
+}
