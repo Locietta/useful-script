@@ -3,6 +3,13 @@
 # * Run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` to allow running PS scripts
 # * Assumed proxy settings are already configured
 
+# Detect if run under admin privileges
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "Please run this script as administrator!" -ForegroundColor Red
+    exit
+}
+
 # Install Scoop
 Invoke-RestMethod get.scoop.sh -outfile 'scoop_install.ps1'
 .\scoop_install.ps1 -ScoopDir 'D:\Scoop' -ScoopGlobalDir 'D:\Scoop\global'
@@ -12,6 +19,12 @@ scoop update # scoop update relies on git
 scoop bucket add Extras
 scoop bucket add sniffer https://github.com/Locietta/sniffer
 scoop install gsudo sfsu autohotkey which
+
+# Enable Long Path Support
+Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
+
+# Enable Developer Mode
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1
 
 ### Write PATH
 $pathsToCheck = @($PSScriptRoot, "$PSScriptRoot\wrappers", "D:\Scoop\shims")
