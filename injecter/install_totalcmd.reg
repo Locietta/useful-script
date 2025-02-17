@@ -1,13 +1,13 @@
 Windows Registry Editor Version 5.00
 
-; replace explorer.exe with total commander to open folders
-
+; Replace explorer.exe with Total Commander for opening drives
 [HKEY_CLASSES_ROOT\Drive\shell]
 @="open"
 
 [HKEY_CLASSES_ROOT\Drive\shell\open\command]
 @="\"D:\\totalcmd\\TotalCMD64.exe\" \"%1\" /T /O /S"
 
+; Replace explorer.exe with Total Commander for opening directories
 [HKEY_CLASSES_ROOT\Directory\shell]
 @="open"
 
