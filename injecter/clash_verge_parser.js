@@ -268,11 +268,11 @@ const regions = [
 
 function main(config) {
   const proxy_count = config?.proxies?.length ?? 0;
-  const proxy_group_Count =
+  const proxy_group_count =
     typeof config?.["proxy-providers"] === "object"
       ? Object.keys(config["proxy-providers"]).length
       : 0;
-  if (proxy_count === 0 && proxy_group_Count === 0) {
+  if (proxy_count === 0 && proxy_group_count === 0) {
     throw new Error("No proxies or proxy groups found in the config.");
   }
   const proxy_names = config.proxies
@@ -312,6 +312,13 @@ function main(config) {
     rules: rules,
     "rule-providers": rule_providers,
     hosts: { ...config.hosts, ...hosts },
+    dns: {
+      ...config.dns,
+      "nameserver-policy": {
+        ...config.dns.nameserver_policy,
+        "*.zju.edu.cn": ["10.10.0.21", "10.10.2.21"],
+      },
+    },
   };
 
   return parsed_config;
