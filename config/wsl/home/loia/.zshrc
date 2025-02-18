@@ -40,6 +40,13 @@ export http_proxy=$https_proxy
 # a bug of distrod(#22), see https://github.com/nullpo-head/wsl-distrod/issues/22
 export SHELL=/usr/bin/zsh
 
+# OpenSSL 3.0's legacy provider failed to load error on newer Linux distro
+# usually encountered while using conda
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
+# systemd & wslg workaround >>>>>
+# ln -s /mnt/wslg/.X11-unix/X0 /tmp/.X11-unix/
+
 # for `sudo -e`
 export VISUAL="/mnt/d/Scoop/apps/notepad4/current/Notepad4.exe"
 
@@ -58,6 +65,8 @@ alias sysd='sudo subsystemctl shell --uid=1000 --start'
 alias notepad="$VISUAL"
 # windows style clear terminal
 alias cls="clear"
+# eza, ls-next
+alias e="eza"
 
 ## Custom Prompt
 setopt PROMPT_SUBST
