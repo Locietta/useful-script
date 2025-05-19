@@ -1,0 +1,1 @@
+"%ProgramFiles%\SSHFS-Win\bin\sshfs-win.exe" svc \sshfs.kr\shadiao@shadiao Z:

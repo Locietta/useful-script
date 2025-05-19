@@ -31,6 +31,8 @@ RunIfNotExist("D:\Program Files\Clash Verge\clash-verge.exe")
 ; and we don't want Listary itself to be elevated
 RunIfNotExist("D:\Scoop\apps\listary\current\Listary.exe")
 
+RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs " util_script_dir "\injecter\map_sshfs.bat", "sshfs-win.exe")
+
 ;
 ; Shortcuts
 ;
