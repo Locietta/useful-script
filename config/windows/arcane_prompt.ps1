@@ -13,6 +13,7 @@ $Env:VIRTUAL_ENV_DISABLE_PROMPT=1
 
 function prompt {
     $last_cmd_failed = (!$?) -or ($global:error.Count -gt $script:error_count)
+    if ((Get-History).Count -gt 0) { $Host.UI.RawUI.WindowTitle = (Get-History)[-1].CommandLine }
     $upper_info = @(
         # Host
         @("$env:USERNAME@$env:COMPUTERNAME", [ConsoleColor]::Green),
