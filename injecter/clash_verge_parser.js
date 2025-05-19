@@ -10,27 +10,16 @@ const test_interval = 150;
 const test_tolerance = 250;
 const test_url = "http://www.gstatic.com/generate_204";
 
-// Fxxk up EasyConnect
-const easy_connect = {
-  name: "EasyConnectSocks5",
+/// ZJU RVPN 
+const rvpn_proxy = {
+  name: "ZJU_RVPN_Socks5",
   type: "socks5",
   server: "127.0.0.1",
   port: "1080",
 };
-const easy_connect_http = {
-  name: "EasyConnectHttp",
-  type: "http",
-  server: "127.0.0.1",
-  port: "1081",
-};
 
 const rules = [
-  // custom rules
-  // "IP-CIDR,10.0.0.0/24,🚸 EasyConnect开关",
-  // "DOMAIN-SUFFIX,zju.edu.cn,🚸 EasyConnect开关",
-  // "DOMAIN-SUFFIX,cc98.org,🚸 EasyConnect开关",
-  // "DOMAIN-SUFFIX,cnki.net,🚸 EasyConnect开关",
-
+  /// custom rules
   "RULE-SET,applications,DIRECT",
   "PROCESS-NAME,wireguard.exe,DIRECT",
   "PROCESS-NAME,wireguard,DIRECT",
@@ -54,8 +43,26 @@ const rules = [
   "DOMAIN,dl.google.com,PROXY", // for golang install etc.
   "DOMAIN-SUFFIX,edu.cn,DIRECT",
 
-  // rules for rule providers
-  "RULE-SET,private,DIRECT",
+  /// ZJU specific rules
+  "IP-CIDR,58.196.192.0/19,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,58.196.224.0/20,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,58.200.100.0/24,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.0.0/20,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.128.0/19,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.160.0/21,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.168.0/22,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.172.0/23,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.174.0/24,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,210.32.176.0/20,🚸 RVPN开关,no-resolve",
+  "IP-CIDR,222.205.0.0/17,🚸 RVPN开关,no-resolve",
+  "RULE-SET,zju,🚸 RVPN开关",
+
+  // "IP-CIDR,10.0.0.0/24,🚸 RVPN开关",
+  // "DOMAIN-SUFFIX,zju.edu.cn,🚸 RVPN开关",
+  // "DOMAIN-SUFFIX,cc98.org,🚸 RVPN开关",
+  // "DOMAIN-SUFFIX,cnki.net,🚸 RVPN开关",
+
+  /// general rules from trusted rule providers
   "RULE-SET,reject,🛑 广告拦截",
   "RULE-SET,icloud,DIRECT",
   "RULE-SET,apple,DIRECT",
@@ -63,22 +70,23 @@ const rules = [
   "RULE-SET,tld-not-cn,PROXY",
   "RULE-SET,gfw,PROXY",
   "RULE-SET,greatfire,PROXY",
+  "RULE-SET,direct,DIRECT",
+  "RULE-SET,proxy,PROXY",
+  "RULE-SET,private,DIRECT",
   "RULE-SET,telegramcidr,PROXY",
   "RULE-SET,lancidr,DIRECT",
   "RULE-SET,cncidr,DIRECT",
   "GEOIP,,DIRECT",
   "GEOIP,CN,DIRECT",
-  "RULE-SET,direct,DIRECT",
-  "RULE-SET,proxy,PROXY",
   "MATCH,🔯 代理模式",
 ];
 
 /// extract special proxy group, so that we can directly use them later
 /// otherwise, we need to find them in proxy_groups by querying their name...
-const easy_connect_group = {
-  name: "🚸 EasyConnect开关",
+const rvpn_selector = {
+  name: "🚸 RVPN开关",
   type: "select",
-  proxies: ["DIRECT", "EasyConnectSocks5", "EasyConnectHttp"],
+  proxies: ["DIRECT", "ZJU_RVPN_Socks5"],
 };
 const core_proxy = {
   name: "PROXY",
@@ -113,7 +121,7 @@ const proxy_groups = [
     type: "select",
     proxies: ["绕过大陆丨黑名单(GFWlist)", "绕过大陆丨白名单(Whitelist)"],
   },
-  // easy_connect_group,
+  rvpn_selector,
   core_proxy,
   manual_selector,
   auto_selector,
@@ -148,6 +156,13 @@ const rule_provider_default_opt = {
 };
 
 const rule_providers = {
+  zju: {
+    type: "http",
+    behavior: "classical",
+    interval: 86400,
+    url: "https://raw.githubusercontent.com/SubConv/ZJU-Rule/main/Clash/ZJU.list",
+    path: "./ruleset/zju_rule.txt",
+  },
   reject: {
     ...rule_provider_default_opt,
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
@@ -303,9 +318,8 @@ function main(config) {
     });
   }
 
-  config.proxies.push(easy_connect);
-  config.proxies.push(easy_connect_http);
-
+  config.proxies.push(rvpn_proxy);
+  
   const parsed_config = {
     ...config,
     "proxy-groups": proxy_groups,
