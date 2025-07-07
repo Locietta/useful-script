@@ -24,7 +24,7 @@ RunIfNotExist("D:\Program Files\Clash Verge\clash-verge.exe")
 ; ZJU RVPN sometimes conflicts with clash, one workaround is to have clash bridge in-school access to zju-connect as a socks5 proxy.
 ; It's actually quite bugprone though... So I decide to turn it off eventually
 ;
-;RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\zju-rvpn.bat", "zju-connect.exe")
+RunIfNotExist("D:\.config\.script\silent-bat-wrapper.vbs D:\.config\.script\injecter\zju-rvpn.bat", "zju-connect.exe")
 
 ; this will add a Listary service UAC pop up...
 ; it's the limitation of its protable version, we can't launch its service in advance

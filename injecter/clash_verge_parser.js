@@ -8,6 +8,7 @@
 /// config url-test
 const test_interval = 150;
 const test_tolerance = 250;
+const fallback_test_interval = 30;
 const test_url = "http://www.gstatic.com/generate_204";
 
 /// ZJU RVPN 
@@ -41,7 +42,6 @@ const rules = [
   "DOMAIN,clash.razord.top,DIRECT",
   "DOMAIN,cn.bing.com,DIRECT",
   "DOMAIN,dl.google.com,PROXY", // for golang install etc.
-  "DOMAIN-SUFFIX,edu.cn,DIRECT",
 
   /// ZJU specific rules
   "IP-CIDR,58.196.192.0/19,🚸 RVPN开关,no-resolve",
@@ -111,7 +111,7 @@ const fallback_selector = {
   name: "🔧 故障转移",
   type: "fallback",
   url: test_url,
-  interval: test_interval,
+  interval: fallback_test_interval,
   hidden: true,
 };
 
@@ -159,6 +159,7 @@ const rule_providers = {
   zju: {
     type: "http",
     behavior: "classical",
+    format: "text",
     interval: 86400,
     url: "https://raw.githubusercontent.com/SubConv/ZJU-Rule/main/Clash/ZJU.list",
     path: "./ruleset/zju_rule.txt",
