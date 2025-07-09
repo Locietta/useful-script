@@ -44,6 +44,9 @@ export SHELL=/usr/bin/zsh
 # usually encountered while using conda
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 
+# Add wsl shared lib to LD_LIBRARY_PATH, mainly for libcuda.so from wslg
+export LD_LIBRARY_PATH=/usr/lib/wsl/lib:$LD_LIBRARY_PATH
+
 # systemd & wslg workaround >>>>>
 # ln -s /mnt/wslg/.X11-unix/X0 /tmp/.X11-unix/
 
