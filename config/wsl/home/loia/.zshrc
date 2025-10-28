@@ -37,6 +37,10 @@ export WINHOST=$(ip route show | grep -i default | awk '{ print $3}')
 export https_proxy="http://$WINHOST:7890"
 export http_proxy=$https_proxy
 
+# mesa can't select d3d12 driver on WSL after 24.3.0
+# Ref: https://github.com/microsoft/WSL/issues/12584#issuecomment-2658951125
+export GALLIUM_DRIVER=d3d12
+
 # a bug of distrod(#22), see https://github.com/nullpo-head/wsl-distrod/issues/22
 export SHELL=/usr/bin/zsh
 
