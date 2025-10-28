@@ -76,7 +76,6 @@ const rules = [
   "RULE-SET,telegramcidr,PROXY",
   "RULE-SET,lancidr,DIRECT",
   "RULE-SET,cncidr,DIRECT",
-  "GEOIP,,DIRECT",
   "GEOIP,CN,DIRECT",
   "MATCH,🔯 代理模式",
 ];
