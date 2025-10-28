@@ -10,7 +10,7 @@ $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="$Env:http_proxy"
 . "$env:UtilScriptDir\config\windows\arcane_prompt.ps1"
 
 # custom functions
-. "$env:UtilScriptDir\pwsh_utility.ps1"
+. "$env:UtilScriptDir\config\windows\pwsh_utility.ps1"
 
 # Hook `sfsu` to speedup scoop
 Invoke-Expression (&sfsu hook)
