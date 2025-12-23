@@ -11,7 +11,7 @@ const test_tolerance = 250;
 const fallback_test_interval = 30;
 const test_url = "http://www.gstatic.com/generate_204";
 
-/// ZJU RVPN 
+/// ZJU RVPN
 const rvpn_proxy = {
   name: "ZJU_RVPN_Socks5",
   type: "socks5",
@@ -58,8 +58,8 @@ const rules = [
   "RULE-SET,zju,🚸 RVPN开关",
 
   // "IP-CIDR,10.0.0.0/24,🚸 RVPN开关",
-  // "DOMAIN-SUFFIX,zju.edu.cn,🚸 RVPN开关",
-  // "DOMAIN-SUFFIX,cc98.org,🚸 RVPN开关",
+  "DOMAIN-SUFFIX,zju.edu.cn,🚸 RVPN开关",
+  "DOMAIN-SUFFIX,cc98.org,🚸 RVPN开关",
   // "DOMAIN-SUFFIX,cnki.net,🚸 RVPN开关",
 
   /// general rules from trusted rule providers
@@ -283,11 +283,11 @@ const regions = [
 
 function main(config) {
   const proxy_count = config?.proxies?.length ?? 0;
-  const proxy_group_count =
+  const proxy_provider_count =
     typeof config?.["proxy-providers"] === "object"
       ? Object.keys(config["proxy-providers"]).length
       : 0;
-  if (proxy_count === 0 && proxy_group_count === 0) {
+  if (proxy_count === 0 && proxy_provider_count === 0) {
     throw new Error("No proxies or proxy groups found in the config.");
   }
   const proxy_names = config.proxies
@@ -319,7 +319,30 @@ function main(config) {
   }
 
   config.proxies.push(rvpn_proxy);
-  
+
+  if (proxy_provider_count > 0) {
+    // make all proxy providers a separate proxy group
+    provider_groups = [];
+
+    for (const [provider_name, provider] of Object.entries(config["proxy-providers"])) {
+      const group_name = `Provider: ${provider_name}`;
+      provider_groups.push({
+        name: group_name,
+        use: [provider_name],
+        type: "url-test",
+        url: test_url,
+        interval: test_interval,
+        torlerance: test_tolerance,
+        lazy: true,
+        hidden: true,
+      });
+    }
+
+    // inject them into manual selector
+    manual_selector.proxies = manual_selector.proxies.concat(provider_groups.map((g) => g.name));
+    proxy_groups.push(...provider_groups);
+  }
+
   const parsed_config = {
     ...config,
     "proxy-groups": proxy_groups,
