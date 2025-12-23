@@ -11,6 +11,7 @@
 [alias]
 	unstage = reset HEAD --
 	last = log -1 HEAD
+	pullall = "!f(){ git pull \"$@\" && git submodule update --init --recursive; }; f"
 [init]
 	defaultBranch = main
 [color]
