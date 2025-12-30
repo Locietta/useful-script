@@ -40,27 +40,13 @@ const rules = [
   "DOMAIN-SUFFIX,bog.ac,DIRECT",
   "DOMAIN-SUFFIX,nexushd.org,DIRECT",
   "DOMAIN,clash.razord.top,DIRECT",
-  "DOMAIN,cn.bing.com,DIRECT",
   "DOMAIN,dl.google.com,PROXY", // for golang install etc.
 
-  /// ZJU specific rules
-  "IP-CIDR,58.196.192.0/19,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,58.196.224.0/20,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,58.200.100.0/24,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.0.0/20,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.128.0/19,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.160.0/21,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.168.0/22,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.172.0/23,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.174.0/24,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,210.32.176.0/20,🚸 RVPN开关,no-resolve",
-  "IP-CIDR,222.205.0.0/17,🚸 RVPN开关,no-resolve",
+  /// ZJU sites
   "RULE-SET,zju,🚸 RVPN开关",
-
-  // "IP-CIDR,10.0.0.0/24,🚸 RVPN开关",
   "DOMAIN-SUFFIX,zju.edu.cn,🚸 RVPN开关",
   "DOMAIN-SUFFIX,cc98.org,🚸 RVPN开关",
-  // "DOMAIN-SUFFIX,cnki.net,🚸 RVPN开关",
+  "RULE-SET,zju-rvpn,🚸 RVPN开关",
 
   /// general rules from trusted rule providers
   "RULE-SET,reject,🛑 广告拦截",
@@ -73,11 +59,25 @@ const rules = [
   "RULE-SET,direct,DIRECT",
   "RULE-SET,proxy,PROXY",
   "RULE-SET,private,DIRECT",
+
+  /// IPCIDR Rules
+  "IP-CIDR,10.0.0.0/8,🚸 RVPN开关",
+  "IP-CIDR,58.196.192.0/19,🚸 RVPN开关",
+  "IP-CIDR,58.196.224.0/20,🚸 RVPN开关",
+  "IP-CIDR,58.200.100.0/24,🚸 RVPN开关",
+  "IP-CIDR,210.32.0.0/20,🚸 RVPN开关",
+  "IP-CIDR,210.32.128.0/19,🚸 RVPN开关",
+  "IP-CIDR,210.32.160.0/21,🚸 RVPN开关",
+  "IP-CIDR,210.32.168.0/22,🚸 RVPN开关",
+  "IP-CIDR,210.32.172.0/23,🚸 RVPN开关",
+  "IP-CIDR,210.32.174.0/24,🚸 RVPN开关",
+  "IP-CIDR,210.32.176.0/20,🚸 RVPN开关",
+  "IP-CIDR,222.205.0.0/17,🚸 RVPN开关",
   "RULE-SET,telegramcidr,PROXY",
   "RULE-SET,lancidr,DIRECT",
   "RULE-SET,cncidr,DIRECT",
   "GEOIP,CN,DIRECT",
-  "MATCH,🔯 代理模式",
+  "MATCH,🔯 代理模式", // blackhole
 ];
 
 /// extract special proxy group, so that we can directly use them later
@@ -162,6 +162,14 @@ const rule_providers = {
     interval: 86400,
     url: "https://raw.githubusercontent.com/SubConv/ZJU-Rule/main/Clash/ZJU.list",
     path: "./ruleset/zju_rule.txt",
+  },
+  "zju-rvpn": {
+    type: "http",
+    behavior: "classical",
+    format: "text",
+    interval: 86400,
+    url: "https://raw.githubusercontent.com/SubConv/ZJU-Rule/refs/heads/main/Clash/ZJU-Rule.list",
+    path: "./ruleset/zju_rvpn.txt",
   },
   reject: {
     ...rule_provider_default_opt,
