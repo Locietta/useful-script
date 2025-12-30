@@ -361,7 +361,11 @@ function main(config) {
       ...config.dns,
       "nameserver-policy": {
         ...config.dns.nameserver_policy,
-        "*.zju.edu.cn": ["10.10.0.21", "10.10.2.21"],
+        "rule-set:zju": ["10.10.0.21", "10.10.2.21"],
+        "*.zju6.edu.cn": ["10.10.0.21", "10.10.2.21"],
+        // these seems not working in clash-verge-rev, overriden by their DNS override feature
+        // you may need to add `*.zju.edu.cn=10.10.0.21;10.10.2.21, *.zju6.edu.cn=10.10.0.21;10.10.2.21` in their DNS override setting UI manually
+        // for some reason they don't support rule-set:zju in the override field
       },
     },
   };
