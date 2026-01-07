@@ -1,0 +1,35 @@
+shell = "zsh"
+
+apply = ["source"]
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[templates]
+defer = "{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"
+
+[plugins.compinit]
+inline = 'autoload -Uz compinit && zsh-defer compinit'
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["defer"]
+
+[plugins.auto-suggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
+
+[plugins.omz-history]
+github = "ohmyzsh/ohmyzsh"
+dir = "lib"
+use = ["history.zsh"]
+
+[plugins.omz-defer]
+github = "ohmyzsh/ohmyzsh"
+dir = "lib"
+use = ["{completion,key-bindings,directories}.zsh"]
+apply = ["defer"]
