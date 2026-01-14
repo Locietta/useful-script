@@ -1,3 +1,5 @@
 @echo off
 
-%UtilScriptDir%\..\frp\multi-frp.exe %UtilScriptDir%\..\frp\multi-frp.json
+@REM https://github.com/Locietta/multi-frp
+
+multi-frp.exe -c %UtilScriptDir%\..\frp\multi-frp.json
