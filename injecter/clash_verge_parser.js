@@ -1,5 +1,5 @@
 /**
- * rule preprocess script for clash-verge(-rev)
+ * rule preprocess script for clash-verge(-rev) and/or clash-party
  *
  * To use this parser, add a script configuration in subscription panel,
  * and copy this file to the script editor.
