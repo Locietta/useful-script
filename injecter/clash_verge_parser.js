@@ -360,13 +360,13 @@ function main(config) {
     dns: {
       ...config.dns,
       "nameserver-policy": {
-        ...config.dns.nameserver_policy,
+        ...config.dns?.nameserver_policy,
         "rule-set:zju": ["10.10.0.21", "10.10.2.21"],
         "+.zju6.edu.cn": ["10.10.0.21", "10.10.2.21"],
         // the dns in raw profile seems not working in newer version of clash-verge-rev/clash-party, because it's overriden by their DNS override feature
         // you may need to add `rule-set:zju=10.10.0.21;10.10.2.21, +.zju6.edu.cn=10.10.0.21;10.10.2.21` in the DNS override setting UI
 
-        // NNOTE: for some reason clash-verge don't support rule-set:zju as the key currently (while the mihomo core does support it), but clash-party is fine with it
+        // NOTE: for some reason clash-verge don't support rule-set:zju as the key currently (while the mihomo core does support it), but clash-party is fine with it
         // I'd suggest to use clash-party if possible, or you can copy the desired domains from the ruleset manually (e.g. '+.zju.edu.cn=10.10.0.21') to make it work in clash-verge
       },
     },
