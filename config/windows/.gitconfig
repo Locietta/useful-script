@@ -20,3 +20,5 @@
 	gpgSign = true
 [credential "helperselector"]
 	selected = manager
+[credential]
+	helper = manager
