@@ -24,28 +24,16 @@ const rules = [
   "RULE-SET,applications,DIRECT",
   "PROCESS-NAME,wireguard.exe,DIRECT",
   "PROCESS-NAME,wireguard,DIRECT",
-  "DOMAIN-SUFFIX,z-lib.org,PROXY",
   "DOMAIN-SUFFIX,cppreference.com,PROXY",
   "DOMAIN-SUFFIX,bing.com,PROXY",
-  "DOMAIN-SUFFIX,store.steampowered.com,PROXY",
-  "DOMAIN-SUFFIX,steamcommunity.com,PROXY",
   "DOMAIN-SUFFIX,gamesauce.org,PROXY",
   "DOMAIN-SUFFIX,wolfram.com,PROXY",
   "DOMAIN-SUFFIX,wolframcdn.com,PROXY",
   "DOMAIN-SUFFIX,ieee.org,DIRECT",
   "DOMAIN-SUFFIX,acm.org,DIRECT",
-  "DOMAIN-SUFFIX,stackoverflow.com,DIRECT",
-  "DOMAIN-SUFFIX,stackexchange.com,DIRECT",
-  "DOMAIN-SUFFIX,ppy.sh,DIRECT",
-  "DOMAIN-SUFFIX,bog.ac,DIRECT",
-  "DOMAIN-SUFFIX,nexushd.org,DIRECT",
-  "DOMAIN,clash.razord.top,DIRECT",
-  "DOMAIN,dl.google.com,PROXY", // for golang install etc.
 
   /// ZJU sites
   "RULE-SET,zju,🚸 RVPN开关",
-  "DOMAIN-SUFFIX,zju.edu.cn,🚸 RVPN开关",
-  "DOMAIN-SUFFIX,cc98.org,🚸 RVPN开关",
   "RULE-SET,zju-rvpn,🚸 RVPN开关",
 
   /// general rules from trusted rule providers
