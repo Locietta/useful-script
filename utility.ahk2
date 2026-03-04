@@ -40,7 +40,7 @@ Invoker(WinTitle, RunCommand) {
 ; But if your `task` is complex script,
 ; you may manually specify `ProcessMatcher`(case-insensitive Name or PID).
 ;
-RunIfNotExist(Task, ProcessMatcher?) {
+RunIfNotExist(Task, ProcessMatcher?, WorkingDir?) {
     local InferredProcessMatcher
     if !IsSet(ProcessMatcher) {
         SplitPath(Task, &InferredProcessMatcher)
@@ -49,7 +49,7 @@ RunIfNotExist(Task, ProcessMatcher?) {
     }
 
     if !ProcessExist(InferredProcessMatcher) {
-        Run(Task)
+        Run(Task, WorkingDir?)
     }
 }
 

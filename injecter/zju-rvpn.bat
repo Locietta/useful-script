@@ -1,1 +1,1 @@
-zju-connect -config D:\.config\zju.toml
+zju-connect -config D:\.config\zju\zju.toml
