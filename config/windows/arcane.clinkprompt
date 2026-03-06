@@ -1,0 +1,229 @@
+-- Native custom Clink prompt, ported from config/windows/arcane_prompt.ps1.
+
+local ESC = "\x1b["
+local RESET = "\x1b[m"
+
+local colors = {
+	white = "37",
+	green = "92",
+	blue = "94",
+	magenta = "95",
+	dark_red = "31",
+	dark_yellow = "33",
+	dark_green = "32",
+	dark_blue = "34",
+	dark_magenta = "35",
+}
+
+local cached_is_admin
+local last_command_line = ""
+
+local function paint(code, text)
+	if not text or text == "" then
+		return ""
+	end
+	return ESC .. code .. "m" .. text .. RESET
+end
+
+local function command_succeeded(ok, _, code)
+	if type(ok) == "number" then
+		return ok == 0
+	end
+
+	if ok == true then
+		if type(code) == "number" then
+			return code == 0
+		end
+		return true
+	end
+
+	return false
+end
+
+local function is_admin()
+	if cached_is_admin ~= nil then
+		return cached_is_admin
+	end
+
+	-- Cached one-time check to avoid paying shell-command cost on every prompt.
+	local ok, kind, code = os.execute("fltmc >nul 2>&1")
+	cached_is_admin = command_succeeded(ok, kind, code)
+	return cached_is_admin
+end
+
+local function get_virtual_env_name()
+	local venv = os.getenv("VIRTUAL_ENV")
+	if venv and venv ~= "" then
+		local name = venv:gsub("[\\/]+$", ""):match("[^\\/]+$") or venv
+		return "venv:" .. name
+	end
+
+	local conda = os.getenv("CONDA_DEFAULT_ENV")
+	if conda and conda ~= "" then
+		return "conda:" .. conda
+	end
+
+	return ""
+end
+
+local function get_git_branch_quick()
+	local branch = ""
+
+	if git and git.getbranch then
+		local ok, value = pcall(git.getbranch, os.getcwd(), true)
+		if ok and type(value) == "string" then
+			branch = value
+		end
+	end
+
+	if branch == "" then
+		local dir = os.getcwd()
+		while dir and dir ~= "" do
+			local head = dir .. "\\.git\\HEAD"
+			local f = io.open(head, "r")
+			if f then
+				local line = f:read("*l")
+				f:close()
+				if line and line ~= "" then
+					branch = line:match("refs/heads/(.+)$") or line
+				end
+				break
+			end
+
+			local parent = dir:match("^(.*)[\\/][^\\/]+$")
+			if not parent or parent == dir then
+				break
+			end
+			dir = parent
+		end
+	end
+
+	if #branch >= 20 then
+		branch = branch:sub(1, 20) .. "..."
+	end
+
+	return branch
+end
+
+local function get_display_path()
+	local cwd = os.getcwd() or ""
+
+	if rl and rl.collapsetilde then
+		local ok, collapsed = pcall(rl.collapsetilde, cwd, true)
+		if ok and type(collapsed) == "string" and collapsed ~= "" then
+			cwd = collapsed
+		end
+	else
+		local home = os.getenv("HOME")
+		if home and home ~= "" then
+			cwd = cwd:gsub("^" .. home:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1"), "~")
+		end
+	end
+
+	if #cwd > 3 then
+		cwd = cwd:gsub("[\\/]+$", "")
+	end
+
+	return cwd
+end
+
+local function get_prompt_group_size(prompt_group)
+	local count = 0
+	for _, e in ipairs(prompt_group) do
+		if e[1] and e[1] ~= "" then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+local function sanitize_title(text)
+	if type(text) ~= "string" then
+		return ""
+	end
+
+	text = text:gsub("[%z\1-\31\127]", " ")
+	text = text:gsub("%s+", " ")
+	text = text:gsub("^%s+", ""):gsub("%s+$", "")
+
+	if #text > 180 then
+		text = text:sub(1, 180)
+	end
+
+	return text
+end
+
+local function on_endedit(line)
+	last_command_line = sanitize_title(line)
+end
+
+if clink.onendedit then
+	clink.onendedit(on_endedit)
+end
+
+local function render_prompt_group(prompt_group, separator_color)
+	local out = {}
+	local size = get_prompt_group_size(prompt_group)
+	local count = 0
+
+	for _, e in ipairs(prompt_group) do
+		local text = e[1]
+		local color = e[2]
+		if text and text ~= "" then
+			table.insert(out, paint(separator_color, "<"))
+			table.insert(out, paint(color, text))
+			table.insert(out, paint(separator_color, ">"))
+			count = count + 1
+			if count ~= size then
+				table.insert(out, paint(separator_color, "-"))
+			end
+		end
+	end
+
+	return table.concat(out)
+end
+
+local function last_command_failed()
+	if os.geterrorlevel then
+		local ok, code = pcall(os.geterrorlevel)
+		if ok and type(code) == "number" then
+			return code ~= 0
+		end
+	end
+
+	return false
+end
+
+local arcane_prompt = clink.promptfilter(50)
+
+function arcane_prompt:filter(prompt)
+	local user = os.getenv("USERNAME") or "user"
+	local host = os.getenv("COMPUTERNAME") or "host"
+	local path_text = get_display_path()
+	local branch = get_git_branch_quick()
+
+	local upper_info = {
+		{ user .. "@" .. host, colors.green },
+		{ path_text, colors.blue },
+		{ branch ~= "" and ("git:" .. branch) or "", colors.magenta },
+	}
+
+	local lower_info = {
+		{ last_command_failed() and "❌" or "", colors.dark_red },
+		{ is_admin() and "⚡" or "", colors.dark_yellow },
+		{ os.date("%H:%M:%S"), colors.dark_green },
+		{ get_virtual_env_name(), colors.dark_blue },
+	}
+
+	local line1 = paint(colors.white, "┌") .. render_prompt_group(upper_info, colors.white)
+	local line2 = paint(colors.dark_magenta, "└")
+		.. render_prompt_group(lower_info, colors.dark_magenta)
+		.. paint(colors.dark_magenta, "->")
+	local title = ""
+	if last_command_line ~= "" then
+		title = "\x1b]0;" .. last_command_line .. "\x07"
+	end
+
+	return title .. line1 .. "\n" .. line2 .. " "
+end
+
