@@ -18,7 +18,7 @@ scoop install git
 scoop update # scoop update relies on git
 scoop bucket add Extras
 scoop bucket add sniffer https://github.com/Locietta/sniffer
-scoop install gsudo sfsu autohotkey which bat ripgrep fd sniffer/notepad4 sniffer/pasteex pwsh eza clink
+scoop install gsudo sfsu autohotkey which bat ripgrep fd sniffer/notepad4 sniffer/pasteex pwsh eza clink zoxide nu
 
 # Enable Long Path Support
 Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
@@ -68,10 +68,11 @@ New-Item -ItemType SymbolicLink -Path "$startup\keymap.ahk2" -Target "$PSScriptR
 # symlink config files to their respective places
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitconfig" -Target "$PSScriptRoot\config\windows\.gitconfig"
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.inputrc" -Target "$PSScriptRoot\config\windows\.inputrc"
+New-Item -ItemType SymbolicLink -Path "$env:APPDATA\nushell\config.nu" -Target "$PSScriptRoot\config\windows\config.nu"
 
 # symlink clink_start.cmd to clink folder, so it runs on cmd startup, need to create folder first
-New-Item -ItemType Directory -Force -Path "$env:APPDATA\Local\clink"
-New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Local\clink\clink_start.cmd" -Target "$PSScriptRoot\config\windows\clink_start.cmd"
+New-Item -ItemType Directory -Force -Path "$env:LocalAppData\clink"
+New-Item -ItemType SymbolicLink -Path "$env:LocalAppData\clink\clink_start.cmd" -Target "$PSScriptRoot\config\windows\clink_start.cmd"
 
 clink autorun install
 # enable pure theme for clink
