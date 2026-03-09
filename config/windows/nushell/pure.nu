@@ -6,6 +6,11 @@
 # - Prompt symbol is prefixed with # when elevated
 # - Optional Python env label on second line
 
+# disable the default virtualenv prompt
+$env.VIRTUAL_ENV_DISABLE_PROMPT = 1
+# To disable default conda env display:
+# $ conda config --set changeps1 false
+
 let __pure_admin_probe = (
   do -i {
     ^pwsh -NoLogo -NoProfile -Command "[bool](New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)"
