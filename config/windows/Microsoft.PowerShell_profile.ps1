@@ -43,3 +43,5 @@ function mklink { # warp mklink into pwsh
 # shadow Windows 24H2's sudo.exe
 function sudo { gsudo @args }
 function su { gsudo }
+
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
