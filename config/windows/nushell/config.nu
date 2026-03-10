@@ -19,6 +19,19 @@
 
 $env.config.show_banner = false
 
+def --wrapped time [...args: string] {
+	if ($args | is-empty) {
+		print $"(ansi light_magenta)Usage: time [command [arg0 arg1 ...]](ansi reset)"
+		return
+	}
+
+	let command_str = ($args | str join ' ')
+	let start = (date now)
+	do -i { nu -c $command_str }
+	let elapsed_seconds = (((date now) - $start) / 1sec)
+	print $"(ansi light_blue)Total Runtime: ($elapsed_seconds)(ansi reset)"
+}
+
 # Proxy
 $env.http_proxy = "http://127.0.0.1:7890"
 $env.https_proxy = "http://127.0.0.1:7890"
@@ -31,3 +44,4 @@ source $"($nu.config-path | path dirname)/pure.nu"
 # alias sudo to gsudo
 alias sudo = gsudo
 alias su = gsudo
+
