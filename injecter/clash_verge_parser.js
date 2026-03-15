@@ -22,6 +22,14 @@ const rvpn_proxy = {
 const rules = [
   /// custom rules
   "RULE-SET,applications,DIRECT",
+
+  /// claude need clean ip, otherwise you could get banned easily...
+  /// proxy it through a separate manual selector
+  "PROCESS-NAME,claude.exe,💫 Claude",
+  "DOMAIN-SUFFIX,anthropic.com,💫 Claude",
+  "DOMAIN-SUFFIX,claude.com,💫 Claude",
+  "DOMAIN-SUFFIX,claude.ai,💫 Claude",
+
   "PROCESS-NAME,wireguard.exe,DIRECT",
   "PROCESS-NAME,wireguard,DIRECT",
   "DOMAIN-SUFFIX,cppreference.com,PROXY",
@@ -85,6 +93,11 @@ const manual_selector = {
   type: "select",
   proxies: ["DIRECT"],
 };
+const claude_selector = {
+  name: "💫 Claude",
+  type: "select",
+  proxies: ["DIRECT"],
+};
 const auto_selector = {
   name: "🚀 自动节点",
   type: "url-test",
@@ -108,8 +121,9 @@ const proxy_groups = [
     type: "select",
     proxies: ["绕过大陆丨黑名单(GFWlist)", "绕过大陆丨白名单(Whitelist)"],
   },
-  rvpn_selector,
   core_proxy,
+  rvpn_selector,
+  claude_selector,
   manual_selector,
   auto_selector,
   fallback_selector,
@@ -293,6 +307,7 @@ function main(config) {
   // inject proxies into default groups
   auto_selector.proxies = fallback_selector.proxies = proxy_names;
   manual_selector.proxies = manual_selector.proxies.concat(proxy_names);
+  claude_selector.proxies = claude_selector.proxies.concat(proxy_names);
 
   // detect region specific proxies
   for (const [region, pattern, flag_icon] of regions) {
@@ -334,8 +349,9 @@ function main(config) {
       });
     }
 
-    // inject them into manual selector
+    // inject them into manual selector and claude selector
     manual_selector.proxies = manual_selector.proxies.concat(provider_groups.map((g) => g.name));
+    claude_selector.proxies = claude_selector.proxies.concat(provider_groups.map((g) => g.name));
     proxy_groups.push(...provider_groups);
   }
 
