@@ -16,12 +16,16 @@ $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="$Env:http_proxy"
 Invoke-Expression (&sfsu hook)
 
 # PSReadLine
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadlineKeyHandler -Key Tab -Function Complete
-Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete
-Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+if (-not [Console]::IsOutputRedirected) {
+  # Do not enable PSReadLine if not in an interactive console
+
+  Set-PSReadLineOption -PredictionSource History
+  Set-PSReadlineKeyHandler -Key Tab -Function Complete
+  Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete
+  Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo
+  Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+  Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+}
 
 $forbid_alias_list = @("ls", "rm", "where", "cp", "diff")
 # $msys2_export_list = @("pacman", "makepkg")
