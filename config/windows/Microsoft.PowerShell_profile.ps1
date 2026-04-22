@@ -2,6 +2,7 @@
 # didn't seem to work
 [System.Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding(65001)
 $env:LANG="zh_CN.UTF-8"
+$env:VISUAL="notepad4.exe"
 
 # PROXY (not using socks5 because some tools don't support it, e.g. aria2#153)
 $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="$Env:http_proxy"

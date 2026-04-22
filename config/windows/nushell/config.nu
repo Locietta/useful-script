@@ -35,6 +35,7 @@ def --wrapped time [...args: string] {
 # Proxy
 $env.http_proxy = "http://127.0.0.1:7890"
 $env.https_proxy = "http://127.0.0.1:7890"
+$env.VISUAL = "notepad4.exe"
 
 # import hooks
 source $"($nu.config-path | path dirname)/sfsu.nu"
