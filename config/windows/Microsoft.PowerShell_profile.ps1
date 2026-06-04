@@ -28,11 +28,27 @@ if (-not [Console]::IsOutputRedirected) {
   Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 }
 
-$forbid_alias_list = @("ls", "rm", "where", "cp", "diff")
+# Let native Unix-style tools from Scoop/uutils win instead of PowerShell aliases.
+$forbid_alias_list = @(
+  "cat",
+  "cp",
+  "diff",
+  "dir",
+  "echo",
+  "ls",
+  "mv",
+  "pwd",
+  "rm",
+  "rmdir",
+  "sleep",
+  "sort",
+  "tee",
+  "where"
+)
 # $msys2_export_list = @("pacman", "makepkg")
 
 foreach ($alias in $forbid_alias_list) {
-  Remove-Item -Path "Alias:\$alias" -Force
+  Remove-Item -Path "Alias:\$alias" -Force -ErrorAction SilentlyContinue
 }
 
 function wh { Write-Host @args }

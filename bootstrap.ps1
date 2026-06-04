@@ -18,7 +18,7 @@ scoop install git
 scoop update # scoop update relies on git
 scoop bucket add Extras
 scoop bucket add sniffer https://github.com/Locietta/sniffer
-scoop install gsudo sfsu autohotkey which bat ripgrep fd sniffer/notepad4 sniffer/pasteex pwsh eza clink zoxide nu
+scoop install gsudo sfsu autohotkey which bat ripgrep fd sniffer/notepad4 sniffer/pasteex sniffer/uutils-coreutils sniffer/uutils-findutils pwsh eza clink zoxide nu
 
 # Enable Long Path Support
 Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
