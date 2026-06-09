@@ -9,7 +9,7 @@
 const test_interval = 150;
 const test_tolerance = 250;
 const fallback_test_interval = 30;
-const test_url = "http://www.gstatic.com/generate_204";
+const test_url = "https://www.gstatic.com/generate_204";
 
 /// ZJU RVPN
 const rvpn_proxy = {
@@ -135,7 +135,7 @@ const proxy_groups = [
   {
     name: "绕过大陆丨黑名单(GFWlist)",
     type: "url-test",
-    url: "http://www.gstatic.com/generate_204",
+    url: "https://www.gstatic.com/generate_204",
     interval: 86400,
     proxies: ["DIRECT"],
     hidden: true,
@@ -143,7 +143,7 @@ const proxy_groups = [
   {
     name: "绕过大陆丨白名单(Whitelist)",
     type: "url-test",
-    url: "http://www.gstatic.com/generate_204",
+    url: "https://www.gstatic.com/generate_204",
     interval: 86400,
     proxies: ["PROXY"],
     hidden: true,
