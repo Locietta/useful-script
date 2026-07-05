@@ -1,16 +1,31 @@
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 
 eval "$(sheldon source)"
+eval "$(zoxide init zsh)"
 
-## Legacy Proxy Workaround
-#  But it's somehow way faster than WSL's mirrored network mode, so...
-export WINHOST=$(ip route show | grep -i default | awk '{ print $3}')
+## Proxy
+wsl_net_mode="$(wslinfo --networking-mode 2>/dev/null | tr '[:upper:]' '[:lower:]')"
+
+# detect WSL network mode, special handling for nat
+case "$wsl_net_mode" in
+  consomme|mirrored|wsl1)
+    WINHOST="127.0.0.1"
+    ;;
+  nat|*)
+    WINHOST="$(ip route show default 2>/dev/null | awk '{print $3; exit}')"
+    ;;
+esac
+
+export WINHOST
 export https_proxy="http://$WINHOST:7890"
-export http_proxy=$https_proxy
+export http_proxy="$https_proxy"
 
 # mesa can't select d3d12 driver on WSL after 24.3.0
 # Ref: https://github.com/microsoft/WSL/issues/12584#issuecomment-2658951125
 export GALLIUM_DRIVER=d3d12
+
+# force uv to use managed python instead of system python
+export UV_MANAGED_PYTHON=1
 
 # a bug of distrod(#22), see https://github.com/nullpo-head/wsl-distrod/issues/22
 export SHELL=/usr/bin/zsh
