@@ -15,7 +15,7 @@ let __pure_admin_probe = (
   do -i {
     ^pwsh -NoLogo -NoProfile -Command "[bool](New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)"
     | str trim
-    | str downcase
+    | str lowercase
   }
   | default "false"
 )
