@@ -49,7 +49,7 @@ RunIfNotExist(Task, ProcessMatcher?, WorkingDir?) {
     }
 
     if !ProcessExist(InferredProcessMatcher) {
-        Run(Task, WorkingDir?)
+        Run(Task, WorkingDir?, 'Hide')
     }
 }
 
